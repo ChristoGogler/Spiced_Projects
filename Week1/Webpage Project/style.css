@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+header {
+    /* background-color: cornflowerblue; */
+}
+
+#logo {
+    height: 70px;
+}
+
+#hamburgerIcon {
+    height: 50px;
+    float: right;
+    padding: 10px;
+}
+
+#splash {
+    position: relative;
+    height: 700px;
+    background-image: url("assets/spices.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: contain;
+}
+
+#splash div {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    margin: auto;
+    /* background-color: tomato; */
+}
+h3 {
+    color: white;
+    text-align: center;
+}
+
+#getStartedButton {
+    border: 3px solid darkorange;
+    border-radius: 50px;
+    padding: 10px;
+    background-color: yellow;
+    margin: 0 auto;
+    display: block;
+}
