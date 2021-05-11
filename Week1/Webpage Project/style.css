@@ -34,6 +34,7 @@ header {
 #splash div {
     position: absolute;
     width: 100%;
+    margin-top: 150px; /*find a more elegant way to position this div vertically*/
 
     /* background-color: tomato; */
 }
