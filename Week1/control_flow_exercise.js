@@ -122,3 +122,9 @@ for (prop in a) {
     //console.log(a[prop]);
     console.log(b);
 }
+
+//exercise 3
+
+for (i = 10; i > 0; i--) {
+    console.log(i);
+}
