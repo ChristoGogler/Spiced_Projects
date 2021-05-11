@@ -105,3 +105,20 @@ function testItAll() {
 }
 
 testItAll();
+
+//exercise 2
+
+var a = {
+    Berlin: "Germany",
+    Paris: "France",
+    "New York": "USA",
+};
+
+var b = {};
+
+for (prop in a) {
+    b[a[prop]] = prop;
+    //console.log(prop);
+    //console.log(a[prop]);
+    console.log(b);
+}
