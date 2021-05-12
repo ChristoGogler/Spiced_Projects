@@ -20,3 +20,14 @@ function testExercise1() {
 testExercise1();
 
 //exercise 2
+
+function waitThenDo(func) {
+    console.log("Please hold!");
+    setTimeout(func, 1500);
+}
+
+var func = function () {
+    console.log("Why am I waiting?");
+};
+
+waitThenDo(func);
