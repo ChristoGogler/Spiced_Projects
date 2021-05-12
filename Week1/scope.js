@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 //global vs local scope
 
 //global scope
@@ -11,7 +12,7 @@ function feedCat() {
 
     var catFood; //hoisting and local scope
 
-    if (hungry) {
+    if (cat.hungry) {
         var meal = prepareCatFood(catFood); //meal only lives inside if statement
     }
 
