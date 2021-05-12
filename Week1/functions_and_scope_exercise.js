@@ -47,9 +47,9 @@ function returnABigNumber(number) {
         }
         console.log("exit 2nd condition - number: " + number);
         return number;
-    } //
+    }
 }
-
+//test exercise 3
 function testExercise3() {
     returnABigNumber(-1); //smaller than 0
 
@@ -70,3 +70,25 @@ function testExercise3() {
     returnABigNumber(123982398643); //will be returned as is
 }
 testExercise3(); //call function to test
+
+//bonus exercise
+function getTotaler() {
+    var sum = 0;
+    return function (summand) {
+        console.log("sum: " + sum);
+        console.log("summand: " + summand);
+        return (sum += summand);
+    };
+}
+
+//test bonus exercise
+function testBonusExercise() {
+    var totaler = getTotaler();
+    totaler(1); //1
+    totaler(2); //3
+    totaler(5); //8
+    totaler(6); //14
+    var endResult = totaler(2); //16
+    console.log(endResult);
+}
+testBonusExercise();
