@@ -41,7 +41,9 @@ function logType(arg) {
         //NaN
         if (isNaN(arg)) {
             console.log(logStrings[3]); //NaN
-        } else console.log(logStrings[2]); //number
+        } else {
+            console.log(logStrings[2]); //number
+        }
     }
 
     //string
@@ -70,7 +72,9 @@ function logType(arg) {
             console.log(logStrings[1]); //null
         } else if (Array.isArray(arg)) {
             console.log(logStrings[9]); //Array
-        } else console.log(logStrings[8]); //object
+        } else {
+            console.log(logStrings[8]); //object
+        }
     }
 
     //Default...No Idea
@@ -116,7 +120,7 @@ var a = {
 
 var b = {};
 
-for (prop in a) {
+for (var prop in a) {
     b[a[prop]] = prop;
     //console.log(prop);
     //console.log(a[prop]);
@@ -125,6 +129,6 @@ for (prop in a) {
 
 //exercise 3
 
-for (i = 10; i > 0; i--) {
+for (var i = 10; i > 0; i--) {
     console.log(i);
 }
