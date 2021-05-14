@@ -1,13 +1,14 @@
 * {
     font-family: "Times New Roman", Times, serif;
 }
+
 body {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
     width: 100%;
 }
 header {
-    /* background-color: cornflowerblue; */
     height: 50px;
     margin: 15px 30px;
     /* border: 2px dashed peachpuff; */
@@ -63,35 +64,30 @@ h2 {
     background-size: cover;
     background-color: rgba(100, 100, 100, 90);
     /* border: 4px dotted skyblue; */
-}
-
-/* #splash div {
-    position: absolute;
-    width: 100%;
-    top: 150px;
-
-    /* background-color: cornflowerblue;
-} */
-
-#promises {
-    background-color: lightgray;
-    position: relative;
-    /* height: 200px; */
-    display: block;
-    padding: 50px;
     overflow: hidden;
 }
 
-#promises div {
-    float: left;
+#promises {
+    background-color: lightgray;
+    padding: 30px 0;
+    box-sizing: border-box;
+    text-align: center;
+    /* border: 4px dotted skyblue; */
+}
 
-    width: 400px;
+#promises > div {
+    width: 45%;
+    display: inline-block;
     /* border: 2px dashed coral; */
+    text-align: left;
+    vertical-align: top;
+}
+#promises > div div {
+    overflow: hidden;
 }
 
 .icon {
-    /* position: relative; */
-    height: 40px;
+    height: 60px;
     padding: 10px;
     float: left;
 }
@@ -107,3 +103,59 @@ footer p {
     font-size: 10pt;
     margin: 0;
 }
+/* for desktop size screens */
+@media screen and (min-width: 1024px) {
+    #promises {
+        margin: 0;
+        padding: 10px;
+    }
+    #promises > div {
+    }
+    #promises > div div {
+        max-width: 400px;
+    }
+    .icon {
+        height: 100px;
+    }
+}
+/* for medium screens/tablet */
+@media screen and (max-width: 768px) {
+}
+
+/* for small screens/smartphone */
+@media screen and (max-width: 640px) {
+    #logo {
+        height: 30px;
+        margin: 0;
+        padding: 10px;
+    }
+    header {
+        margin: 0;
+        padding: 0;
+    }
+
+    #promises {
+        margin: 0;
+        padding: 10px;
+    }
+
+    #promises > div {
+        width: 100%;
+        display: block;
+    }
+    #promises > div div {
+        min-width: 200px;
+    }
+
+    h1 {
+        font-size: 22pt;
+    }
+
+    #getStartedButton {
+        border: 2px solid rgb(211, 127, 23);
+        font-size: 12pt;
+    }
+    .icon {
+        height: 40px;
+    }
+} /* END very small screens */
