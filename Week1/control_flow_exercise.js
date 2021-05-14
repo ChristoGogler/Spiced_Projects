@@ -28,8 +28,8 @@ var logStrings = [
     "I have no idea!",
 ];
 
-function logType(arg) {
-    var type = typeof arg;
+function logType(data) {
+    var type = typeof data;
     //undefined
 
     if (type == "undefined") {
@@ -39,7 +39,7 @@ function logType(arg) {
     //number
     else if (type == "number") {
         //NaN
-        if (isNaN(arg)) {
+        if (isNaN(data)) {
             console.log(logStrings[3]); //NaN
         } else {
             console.log(logStrings[2]); //number
@@ -68,9 +68,9 @@ function logType(arg) {
 
     //Object
     else if (type == "object") {
-        if (arg === null) {
+        if (data === null) {
             console.log(logStrings[1]); //null
-        } else if (Array.isArray(arg)) {
+        } else if (Array.isArray(data)) {
             console.log(logStrings[9]); //Array
         } else {
             console.log(logStrings[8]); //object
