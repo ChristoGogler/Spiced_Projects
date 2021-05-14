@@ -22,33 +22,44 @@ h1 {
     font-weight: lighter;
     position: relative;
     top: 150px;
+    transition: font-size 0.2s ease-in;
 
     /* border: 1px dotted turquoise; */
 }
 
 #getStartedButton {
-    border: 3px solid rgb(211, 127, 23);
+    border: 3px solid #d37f17;
     border-radius: 50px;
     padding: 5px 30px;
-    background-color: rgb(252, 214, 61);
-    color: rgb(211, 127, 23);
+    background-color: #fcd63d;
+    color: #d37f17;
 
     font-size: 20pt;
     margin: 0 auto; /*same space on left & right*/
     display: block;
     position: relative;
     top: 150px;
+
+    transition: background-color 0.5s ease-in;
+
     /* border: 1px dotted tomato; */
 }
 
+#getStartedButton:hover {
+    border-color: #fcd63d;
+    background-color: #d37f17;
+    color: #fcd63d;
+}
 h2 {
     font-size: 12pt;
     line-height: 30%;
+    transition: font-size 0.1s ease-in;
 }
 
 #logo {
     height: 50px;
     float: left;
+    transition: height 0.1s ease-in;
 }
 
 #hamburgerIcon {
@@ -81,6 +92,7 @@ h2 {
     /* border: 2px dashed coral; */
     text-align: left;
     vertical-align: top;
+    overflow: hidden;
 }
 #promises > div div {
     overflow: hidden;
@@ -90,6 +102,7 @@ h2 {
     height: 60px;
     padding: 10px;
     float: left;
+    transition: height 0.2s ease-in-out;
 }
 
 footer {
@@ -112,10 +125,20 @@ footer p {
     #promises > div {
     }
     #promises > div div {
-        max-width: 400px;
+        max-width: 350px;
     }
     .icon {
         height: 100px;
+    }
+    h1 {
+        font-size: 35pt;
+        font-weight: normal;
+    }
+    h2 {
+        font-size: 15pt;
+    }
+    p {
+        font-size: 14pt;
     }
 }
 /* for medium screens/tablet */
@@ -150,6 +173,12 @@ footer p {
     h1 {
         font-size: 22pt;
     }
+    h2 {
+        font-size: 10pt;
+    }
+    p {
+        font-size: 10pt;
+    }
 
     #getStartedButton {
         border: 2px solid rgb(211, 127, 23);
@@ -158,4 +187,31 @@ footer p {
     .icon {
         height: 40px;
     }
-} /* END very small screens */
+} /* END SMALL SCREENS */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #262626;
+        color: whitesmoke;
+    }
+    #promises {
+        background-color: #454545;
+    }
+    #footer {
+        background-color: #212121;
+    }
+    #getStartedButton {
+        border-color: #fcd63d;
+        background-color: #454545;
+        color: #fcd63d;
+    }
+    #getStartedButton:hover {
+        border-color: #454545;
+        background-color: #fcd63d;
+        color: #454545;
+    }
+    #splash {
+        background-color: #000;
+        background-blend-mode: screen;
+    }
+}
