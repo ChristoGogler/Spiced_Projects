@@ -38,3 +38,35 @@ function testExercise1() {
 }
 
 testExercise1();
+
+//exercise 2
+//1 parameter: 1)array
+//return: another array
+
+function safeReverse(array) {
+    //copy array
+    var sliced = array.slice();
+    var reversedArray = [];
+    //loop over array
+    for (var i = 0; i < array.length; i++) {
+        reversedArray.push(sliced.pop());
+    }
+
+    return reversedArray;
+}
+
+//test exercise 2
+function testExercise2() {
+    var testArray = [];
+    //test cases
+    testArray = safeReverse([1, 2, 3, 4, 5, 6, 7, 8]);
+    console.log(testArray);
+    testArray = safeReverse(["a", "b", "c", "d", "e", "f", "g"]);
+    console.log(testArray);
+    testArray = safeReverse([1, "a", 2, "b"]);
+    console.log(testArray);
+    testArray = safeReverse([1, 2, undefined, null, 3, 4]);
+    console.log(testArray);
+}
+
+testExercise2();
