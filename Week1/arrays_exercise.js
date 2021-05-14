@@ -1,6 +1,6 @@
 //exercise 1
 //2 parameters: 1)obj/arr 2)callback
-//return:
+//return: -
 function each(objOrArr, callback) {
     //check if object or array
     var isArray = Array.isArray(objOrArr);
@@ -70,3 +70,30 @@ function testExercise2() {
 }
 
 testExercise2();
+
+//exercise 3
+//1 parameter: 1) array of numbers
+//do: filter for numbers that are smaller than 0
+//return: another array
+function getLessThanZero(numbers) {
+    var negativeNumbers = [];
+    negativeNumbers = numbers.filter(function (val) {
+        return val < 0;
+    });
+
+    return negativeNumbers;
+}
+
+//test exercise 3
+function testExercise3() {
+    var testArray = [];
+    //test cases
+    testArray = getLessThanZero([1, 2, -1, -90, 10]); //[-1, -90]
+    console.log(
+        "[-1, -90] ---- " + testArray + " ---- Length: " + testArray.length
+    );
+    testArray = getLessThanZero([1, 2]); //[]
+    console.log(testArray);
+    console.log("[] ---- " + testArray + " ---- Length: " + testArray.length);
+}
+testExercise3();
