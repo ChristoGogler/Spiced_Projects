@@ -105,3 +105,91 @@ function testFindInArray() {
     }); // => undefined
 }
 testFindInArray();
+
+//exercise 3 - stringContains()
+
+//2 parameters: 1) string 2) string
+// check if string2 is contained in string1
+//return: boolean
+function stringContains(containing, contained) {
+    var isContained = null;
+
+    //if containing is shorter than contained
+    //cant be contained, cause too short
+    if (contained.length > containing.length) {
+        return false;
+    }
+    //case insensitivity
+    contained = contained.toLowerCase();
+    containing = containing.toLowerCase();
+    //log strings
+    console.log("contained: " + contained);
+    // console.log(containing);
+    //parse to array
+    var containedArray = contained.split("");
+    var containingArray = containing.split("");
+
+    //loop over containing array
+    for (var i = 0; i < containingArray.length; i++) {
+        console.log("for loop - containingArray[i]: " + containingArray[i]);
+        //recurse over contained
+        //start recursion if elements match
+        //stop condition: containedArray.length == 0
+        if (
+            containedArray.length == 1 &&
+            containedArray[0] == containingArray[i]
+        ) {
+            console.log("the end!");
+            return true;
+        } else {
+            //elements dont match --> stop recursion
+            if (containedArray[0] != containingArray[i]) {
+                //elements dont match --> false
+                return false;
+            } else {
+                //lose first element
+                containedArray.shift();
+                //shorten containing
+                containingArray.splice(i + 1, 0);
+                console.log(containingArray);
+                //elements match -- true
+                //parse to string
+                //then recurse
+                isContained = stringContains(
+                    containingArray.join(""),
+                    containedArray.join("")
+                );
+                return isContained;
+            }
+        }
+    }
+}
+
+function testStringContains() {
+    var isContained = false;
+
+    isContained = stringContains("diego", "di");
+    console.log("Should be true!");
+    console.log(isContained);
+
+    isContained = stringContains("di", "Diego");
+    console.log("Should be false");
+    console.log(isContained);
+
+    isContained = stringContains("hello", "ll");
+    console.log("Should be true");
+    console.log(isContained);
+
+    isContained = stringContains("good morning", "morning");
+    console.log("Should be  true");
+    console.log(isContained);
+
+    isContained = stringContains("blabla", "Blabla");
+    console.log("Should be  true");
+    console.log(isContained);
+
+    isContained = stringContains("hello", " hello");
+    console.log("Should be  false");
+    console.log(isContained);
+}
+testStringContains();
