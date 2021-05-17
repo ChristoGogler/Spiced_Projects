@@ -5,13 +5,14 @@
 //1 method: getArea() - parameter: width, height; return: number
 
 function Rectangle(width, height) {
-    console.log("inside Rectangle: " + width + " " + height);
+    // console.log("inside Rectangle: " + width + " " + height);
     this.width = width;
     this.height = height;
-    this.getArea = function () {
-        return this.width * this.height;
-    };
 }
+
+Rectangle.prototype.getArea = function () {
+    return this.width * this.height;
+};
 
 //Part 2
 //constructor Square
@@ -23,7 +24,7 @@ function Square(width) {
     this.height = width;
 }
 
-Square.prototype.getArea = rect.getArea;
+Square.prototype.getArea = Rectangle.prototype.getArea;
 
 //test exercise 1
 
@@ -34,7 +35,6 @@ var square = new Square(4);
 console.log(square.getArea()); //16
 
 // exercise 2
-
 //write function invertCase
 //1 parameter: string
 //invert uppercase/lowercase
