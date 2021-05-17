@@ -22,7 +22,7 @@ h1 {
     font-weight: lighter;
     position: relative;
     top: 150px;
-    transition: font-size 0.2s ease-in;
+    /* transition: font-size 0.2s ease-in; */
 
     /* border: 1px dotted turquoise; */
 }
@@ -40,7 +40,7 @@ h1 {
     position: relative;
     top: 150px;
 
-    transition: background-color 0.5s ease-in;
+    /* transition: background-color 0.5s ease-in; */
 
     /* border: 1px dotted tomato; */
 }
@@ -53,13 +53,13 @@ h1 {
 h2 {
     font-size: 12pt;
     line-height: 30%;
-    transition: font-size 0.1s ease-in;
+    /* transition: font-size 0.1s ease-in; */
 }
 
 #logo {
     height: 50px;
     float: left;
-    transition: height 0.1s ease-in;
+    /* transition: height 0.1s ease-in; */
 }
 
 #hamburgerIcon {
@@ -88,14 +88,14 @@ h2 {
 
 #promises > div {
     width: 45%;
-    display: inline-block;
+    display: inline-block; /***/
     /* border: 2px dashed coral; */
     text-align: left;
     vertical-align: top;
     overflow: hidden;
 }
 
-#promises > div div {
+#promises > div > div {
     overflow: hidden;
 }
 
@@ -103,7 +103,7 @@ h2 {
     height: 60px;
     padding: 10px;
     float: left;
-    transition: height 0.2s ease-in-out;
+    /* transition: height 0.2s ease-in-out; */
 }
 
 footer {
