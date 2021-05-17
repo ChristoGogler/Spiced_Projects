@@ -112,8 +112,6 @@ testFindInArray();
 // check if string2 is contained in string1
 //return: boolean
 function stringContains(containing, contained) {
-    var isContained = null;
-
     //if containing is shorter than contained
     //cant be contained, cause too short
     if (contained.length > containing.length) {
@@ -131,38 +129,15 @@ function stringContains(containing, contained) {
 
     //loop over containing array
     for (var i = 0; i < containingArray.length; i++) {
-        console.log("for loop - containingArray[i]: " + containingArray[i]);
-        //recurse over contained
-        //start recursion if elements match
-        //stop condition: containedArray.length == 0
-        if (
-            containedArray.length == 1 &&
-            containedArray[0] == containingArray[i]
-        ) {
-            console.log("the end!");
-            return true;
-        } else {
-            //elements dont match --> stop recursion
-            if (containedArray[0] != containingArray[i]) {
-                //elements dont match --> false
-                return false;
-            } else {
-                //lose first element
-                containedArray.shift();
-                //shorten containing
-                containingArray.splice(i + 1, 0);
-                console.log(containingArray);
-                //elements match -- true
-                //parse to string
-                //then recurse
-                isContained = stringContains(
-                    containingArray.join(""),
-                    containedArray.join("")
-                );
-                return isContained;
+        //loop ocer contained array
+        for (var j = 0; j < containedArray.length; j++) {
+            if (containedArray[j] != containingArray[i + j]) {
+                break;
             }
+            return true;
         }
     }
+    return false;
 }
 
 function testStringContains() {
