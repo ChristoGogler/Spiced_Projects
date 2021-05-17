@@ -57,7 +57,7 @@ function safeReverse(array) {
 
 //test exercise 2
 function testExercise2() {
-    var testArray = [];
+    var testArray; //declaration
     //test cases
     testArray = safeReverse([1, 2, 3, 4, 5, 6, 7, 8]);
     console.log(testArray);
@@ -76,7 +76,7 @@ testExercise2();
 //do: filter for numbers that are smaller than 0
 //return: another array
 function getLessThanZero(numbers) {
-    var negativeNumbers = [];
+    var negativeNumbers; //declaration
     negativeNumbers = numbers.filter(function (val) {
         return val < 0;
     });
@@ -86,7 +86,7 @@ function getLessThanZero(numbers) {
 
 //test exercise 3
 function testExercise3() {
-    var testArray = [];
+    var testArray; //declaration
     //test cases
     testArray = getLessThanZero([1, 2, -1, -90, 10]); //[-1, -90]
     console.log(
