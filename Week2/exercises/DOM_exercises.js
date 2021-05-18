@@ -51,3 +51,30 @@ function testGetAllElements() {
     console.log(isArray);
 }
 testGetAllElements();
+
+//exercise 3
+//write function
+//insert element into the body of current page
+// fixed position, z-index of 2147483647, left of 20px, top of 100px, font-size of 200px, contain text 'AWESOME'
+function insertElement() {
+    //create div element
+    var newP = document.createElement("p");
+
+    //change style/properties
+    newP.style.zIndex = 2147483647;
+    newP.style.position = "fixed";
+    newP.style.left = "20px";
+    newP.style.top = "100px";
+    newP.style.fontSize = "200px";
+    newP.innerHTML = "AWESOME";
+
+    //insert into the page
+    var insertionPoint = document.getElementsByTagName("h1");
+    // console.log(v);
+    // console.log(typeof v[0]);
+    document.body.insertBefore(newP, insertionPoint[0]);
+}
+
+function testInsertElement() {
+    insertElement();
+}
