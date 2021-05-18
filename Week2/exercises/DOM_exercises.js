@@ -23,3 +23,31 @@ function testFindAndChange() {
 }
 
 testFindAndChange();
+
+//exercise 2 -
+//write function
+//parameter: string className
+//return: array with all the elements with that class
+
+function getAllElements(className) {
+    var elementsArray = [];
+
+    var elements = document.getElementsByClassName(className);
+    for (var i = 0; i < elements.length; i++) {
+        elementsArray.push(elements[i]);
+    }
+    console.log(elementsArray);
+    if (elementsArray.length == 0) {
+        alert("No such class: " + className);
+    }
+    return elementsArray;
+}
+// test exercise 2
+function testGetAllElements() {
+    //test cases
+    var isArray;
+    isArray = Array.isArray(getAllElements("option"));
+    // isArray = Array.isArray(getAllElements("justinbieber"));
+    console.log(isArray);
+}
+testGetAllElements();
