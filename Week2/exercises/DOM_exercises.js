@@ -13,6 +13,13 @@ function findAndChange(selector) {
         elements[i].style.textDecoration = "underline";
         elements[i].style.fontStyle = "italic";
     }
+
+    // possible, but also iterates over "hidden" properties
+    // for (const property in elements) {
+    //     console.log(elements);
+    //     console.log(property);
+    //     elements[property].innerHTML += " Yummy!";
+    // }
 }
 
 //test exercise 1
@@ -78,3 +85,4 @@ function insertElement() {
 function testInsertElement() {
     insertElement();
 }
+testInsertElement();
