@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: medium;
+}
+h2 {
+    font-size: x-large;
+    color: teal;
+}
+
+img {
+    width: 300px;
+    height: 200px;
+    background-size: cover;
+    float: right;
+    object-fit: cover;
+}
+div {
+    margin: 20px;
+    width: 700px;
+    overflow: hidden;
+}
+
+#slugs {
+    padding: 20px;
+}
+
+#blue {
+}
+
+#leaf {
+}
+
+#california {
+}
+
+#clione {
+}
+
+#nembrotha {
+}
+
+button {
+    padding: 20px;
+    background-color: thistle;
+}
