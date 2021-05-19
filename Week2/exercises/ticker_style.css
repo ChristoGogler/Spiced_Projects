@@ -1,0 +1,19 @@
+#ticker {
+    overflow: hidden;
+    position: relative;
+    height: 25px;
+    background-color: cornflowerblue;
+}
+#headlines {
+    white-space: nowrap;
+    position: absolute;
+    left: 90%;
+    /* border: 1px solid coral; */
+    background-color: cornflowerblue;
+}
+#headlines a {
+    padding-right: 25px;
+    text-decoration: none;
+    font-family: Helvetica, Verdana, sans-serif;
+    color: white;
+}
