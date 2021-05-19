@@ -85,21 +85,39 @@ console.log("DOM_Events_exercises JS");
         // console.log("MouseupHandler - this", this);
         this.style.backgroundColor = getRandomColor();
     }
-    //function swapContent
-    //0 parameter
-    //do: cut a portion of a string a
-    //return: string, color hexcode like "#a70f2c"
-    function getRandomColor() {
-        var randomColor = "";
-        var possibleCharacters = "0123456789abcdef";
-        // generate 6 random numbers between 0 and 15, add them to var randomColor
-        for (var i = 0; i < 6; i++) {
-            randomColor += possibleCharacters.charAt(
-                Math.floor(Math.random() * 16)
-            );
-        }
-        console.log(randomColor);
-        //add # to randomColor
-        return "#" + randomColor;
+})();
+
+//function getRandomColor
+//0 parameter
+//do: cut a portion of a string a
+//return: string, color hexcode like "#a70f2c"
+function getRandomColor() {
+    var randomColor = "";
+    var possibleCharacters = "0123456789abcdef";
+    // generate 6 random numbers between 0 and 15, add them to var randomColor
+    for (var i = 0; i < 6; i++) {
+        randomColor += possibleCharacters.charAt(
+            Math.floor(Math.random() * 16)
+        );
     }
+    console.log(randomColor);
+    //add # to randomColor
+    return "#" + randomColor;
+}
+
+//exercise 4
+//change background colour of inner and outerbox on click, ignore outerbox when click on innerbox
+
+//iife
+(function () {
+    var innerBox = document.getElementById("innerBox");
+    var outerBox = document.getElementById("outerBox");
+    //add eventlistener - when user clicks
+    innerBox.addEventListener("click", function (e) {
+        e.stopPropagation(); //This event will not be handled by click handlers attached to document or document.documentElement
+        this.style.backgroundColor = getRandomColor();
+    });
+    outerBox.addEventListener("click", function (e) {
+        this.style.backgroundColor = getRandomColor();
+    });
 })();
