@@ -47,7 +47,7 @@ console.log("loaded: ticker.js");
             //eventlistener mouseexit
             links[i].addEventListener("mouseleave", function () {
                 console.log("Mouseleave occurred");
-                this.style.color = "white";
+                this.style.color = "black";
                 this.style.textDecoration = "none";
                 moveLinks();
             });
