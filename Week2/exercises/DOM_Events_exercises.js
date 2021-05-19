@@ -20,10 +20,19 @@ console.log("DOM_Events_exercises JS");
         var halfWidth = box.offsetWidth / 2;
         var halfHeight = box.offsetHeight / 2;
 
+        //parent element offset
+        var parentOffsetX = box.parentElement.offsetLeft;
+        var parentOffsetY = box.parentElement.offsetTop;
+
         //calculate the new coordinates for the element
-        var newX = event.clientX - halfWidth;
-        var newY = event.clientY - halfHeight;
-        //change style of "top" and "left"
+        // var newX = event.clientX - halfWidth;
+        // var newY = event.clientY - halfHeight
+
+        // //with parent element offset
+        var newX = event.clientX - halfWidth - parentOffsetX;
+        var newY = event.clientY - halfHeight - parentOffsetY;
+
+        // change style of "top" and "left"
         box.style.left = newX + "px";
         box.style.top = newY + "px";
     }
@@ -53,5 +62,44 @@ console.log("DOM_Events_exercises JS");
     function getPortionOfMessage(numberOfCharacterNeeded) {
         var newContent = message.slice(0, numberOfCharacterNeeded);
         return newContent;
+    }
+})();
+
+//exercise 3
+// background colour of box should change randomly when user mouses down/up on it
+
+//iife
+(function () {
+    var blackBox = document.getElementById("blackBox");
+    //add eventlistener - when user mouses down
+    blackBox.addEventListener("mousedown", blackBoxMousedownHandler);
+    blackBox.addEventListener("mouseup", blackBoxMouseupHandler);
+
+    //blackBoxMousedownHandler
+    function blackBoxMousedownHandler(event) {
+        // console.log("MousedownHandler - this", this);
+        this.style.backgroundColor = getRandomColor();
+    }
+    //blackBoxMouseupHandler
+    function blackBoxMouseupHandler(event) {
+        // console.log("MouseupHandler - this", this);
+        this.style.backgroundColor = getRandomColor();
+    }
+    //function swapContent
+    //0 parameter
+    //do: cut a portion of a string a
+    //return: string, color hexcode like "#a70f2c"
+    function getRandomColor() {
+        var randomColor = "";
+        var possibleCharacters = "0123456789abcdef";
+        // generate 6 random numbers between 0 and 15, add them to var randomColor
+        for (var i = 0; i < 6; i++) {
+            randomColor += possibleCharacters.charAt(
+                Math.floor(Math.random() * 16)
+            );
+        }
+        console.log(randomColor);
+        //add # to randomColor
+        return "#" + randomColor;
     }
 })();
