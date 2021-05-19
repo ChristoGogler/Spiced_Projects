@@ -26,9 +26,9 @@ console.log("DOM_Events_exercises JS");
 
         //calculate the new coordinates for the element
         // var newX = event.clientX - halfWidth;
-        // var newY = event.clientY - halfHeight
+        // var newY = event.clientY - halfHeight;
 
-        // //with parent element offset
+        //with parent element offset
         var newX = event.clientX - halfWidth - parentOffsetX;
         var newY = event.clientY - halfHeight - parentOffsetY;
 
