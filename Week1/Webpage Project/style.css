@@ -1,13 +1,13 @@
 * {
     font-family: "Times New Roman", Times, serif;
+    font-size: 12pt;
 }
 
 body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    width: 100%;
-    font-size: 12pt;
+    width: 100vw;
     overflow-x: hidden;
 }
 body.backdrop::after {
@@ -45,18 +45,18 @@ h1 {
 nav {
     padding-top: 60px;
     padding-right: 20px;
-    position: absolute;
+    position: fixed;
     font-size: 1.5rem;
     line-height: 2rem;
     background: white;
     height: 100vh;
-    left: 100vw;
-    transform: translateX(0);
+    right: 0;
+    transform: translateX(100%);
     transition: transform 0.5s ease;
     z-index: 1;
 }
 .open {
-    transform: translateX(-100%);
+    transform: translateX(0);
 }
 .close {
 }
@@ -194,19 +194,17 @@ footer p {
 /* for medium screens/tablet */
 @media screen and (max-width: 768px) {
     #hamburgerButton {
-        /* position: relative;
-        float: right; */
     }
 }
 
 /* for small screens/smartphone */
 @media screen and (max-width: 640px) {
     #hamburgerButton {
-        /* position: relative;
-        float: right; */
+        width: 30px;
+        height: 30px;
+        padding: 10px 0;
     }
     body {
-        overflow-x: hidden;
     }
     nav a {
         font-size: 1.5rem;
