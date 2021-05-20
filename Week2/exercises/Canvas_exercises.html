@@ -8,7 +8,15 @@
     </head>
     <body>
         <section>
-            <canvas id="canvas" width="700" height="700"></canvas>
+            <canvas class="canvas" id="outerCanvas" width="1500" height="600">
+                <canvas
+                    class="canvas"
+                    id="innerCanvas"
+                    width="500"
+                    height="510"
+                >
+                </canvas>
+            </canvas>
             <p>Canvas Exercise - Stick Person</p>
         </section>
         <script src="canvas_exercises.js"></script>
