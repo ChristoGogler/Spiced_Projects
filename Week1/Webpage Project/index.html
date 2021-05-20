@@ -7,13 +7,25 @@
         <link type="text/css" rel="stylesheet" href="style.css" />
     </head>
     <body>
+        <nav>
+            <ul>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Upgrade</a></li>
+                <li><a href="#">Subscribe</a></li>
+
+                <li><a id="logout" href="#">Log out</a></li>
+            </ul>
+        </nav>
         <header>
             <img id="logo" src="assets/spiced.png" alt="logo SPICED" />
-            <img
-                id="hamburgerIcon"
-                src="assets/hamburgermenu.svg"
-                alt="menu icon"
-            />
+            <button id="hamburgerButton">
+                <img
+                    id="hamburgerIcon"
+                    src="assets/hamburgermenu.svg"
+                    alt="menu icon"
+                />
+            </button>
         </header>
         <section id="splash">
             <h1>Welcome to SPICED and the Future.</h1>
@@ -64,5 +76,6 @@
         <footer>
             <p>(c) 2016 Some Organisation</p>
         </footer>
+        <script src="welcome_spiced.js"></script>
     </body>
 </html>

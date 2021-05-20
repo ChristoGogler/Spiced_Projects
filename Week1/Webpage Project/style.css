@@ -7,17 +7,23 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
+    font-size: 12pt;
+    overflow-x: hidden;
 }
+
 header {
     height: 50px;
-    margin: 15px 30px;
+    padding: 15px 30px;
     /* border: 2px dashed peachpuff; */
 }
 
+a {
+    text-decoration: none;
+}
 h1 {
     color: white;
     text-align: center;
-    font-size: 30pt;
+    font-size: 3rem;
     font-style: italic;
     font-weight: lighter;
     position: relative;
@@ -27,6 +33,29 @@ h1 {
     /* border: 1px dotted turquoise; */
 }
 
+nav {
+    padding-top: 60px;
+    padding-right: 20px;
+    position: absolute;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    background: white;
+    height: 100vh;
+    left: 100vw;
+    transform: translateX(0);
+    transition: transform 0.5s ease;
+    z-index: 1;
+}
+.open {
+    transform: translateX(-100%);
+}
+
+nav ul {
+    list-style-type: none;
+}
+#logout {
+    font-size: 1rem;
+}
 #getStartedButton {
     border: 3px solid #d37f17;
     border-radius: 50px;
@@ -34,7 +63,7 @@ h1 {
     background-color: #fcd63d;
     color: #d37f17;
 
-    font-size: 20pt;
+    font-size: 2rem;
     margin: 0 auto; /*same space on left & right*/
     display: block;
     position: relative;
@@ -51,7 +80,6 @@ h1 {
     color: #fcd63d;
 }
 h2 {
-    font-size: 12pt;
     line-height: 30%;
     /* transition: font-size 0.1s ease-in; */
 }
@@ -61,11 +89,21 @@ h2 {
     float: left;
     /* transition: height 0.1s ease-in; */
 }
-
-#hamburgerIcon {
-    height: 30px;
-    float: right;
-    padding: 10px;
+#hamburgerButton {
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    width: 40px;
+    height: 40px;
+    /* float: right; */
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 2;
+}
+#hamburgerButton:active {
 }
 
 #splash {
@@ -114,7 +152,7 @@ footer {
 footer p {
     padding: 10px 20px;
     color: white;
-    font-size: 10pt;
+    font-size: 1rem;
     margin: 0;
 }
 /* for desktop size screens */
@@ -132,22 +170,36 @@ footer p {
         height: 100px;
     }
     h1 {
-        font-size: 35pt;
+        font-size: 3rem;
         font-weight: normal;
     }
     h2 {
-        font-size: 15pt;
+        font-size: 1.5rem;
     }
     p {
-        font-size: 14pt;
+        font-size: 1.5rem;
     }
 }
 /* for medium screens/tablet */
 @media screen and (max-width: 768px) {
+    #hamburgerButton {
+        /* position: relative;
+        float: right; */
+    }
 }
 
 /* for small screens/smartphone */
 @media screen and (max-width: 640px) {
+    #hamburgerButton {
+        /* position: relative;
+        float: right; */
+    }
+    body {
+        overflow-x: hidden;
+    }
+    nav a {
+        font-size: 1.5rem;
+    }
     #logo {
         height: 30px;
         margin: 0;
@@ -172,18 +224,18 @@ footer p {
     }
 
     h1 {
-        font-size: 22pt;
+        font-size: 2rem;
     }
     h2 {
-        font-size: 10pt;
+        font-size: 1rem;
     }
     p {
-        font-size: 10pt;
+        font-size: 1rem;
     }
 
     #getStartedButton {
         border: 2px solid rgb(211, 127, 23);
-        font-size: 12pt;
+        font-size: 1rem;
     }
     .icon {
         height: 40px;
