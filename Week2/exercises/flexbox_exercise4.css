@@ -1,0 +1,73 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* section containing all squares,  */
+section {
+    margin: 10px 8px;
+    display: flex;
+}
+
+/* big squares size, positioning and margin in between each other */
+.big {
+    width: 200px;
+    height: 200px;
+    margin: 0 2px;
+    display: flex;
+}
+
+/* small squares size and absolute positioning */
+.small {
+    width: 100px;
+    height: 100px;
+}
+
+/* background colours for the squares */
+.grey {
+    background-color: grey;
+}
+
+.black {
+    background-color: black;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.purple {
+    background-color: purple;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.green {
+    background-color: green;
+}
+
+.pink {
+    background-color: pink;
+}
+
+/* positioning for the inner squares*/
+.bottom {
+    align-items: flex-end;
+}
+
+.left {
+    justify-content: flex-start;
+}
+
+.top {
+    align-items: flex-start;
+}
+.right {
+    justify-content: flex-end;
+}
