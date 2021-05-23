@@ -45,7 +45,7 @@ main {
 .slide.onscreen,
 .slide.exit {
     transition: ease-out;
-    transition-duration: 1s;
+    transition-duration: 0.5s;
 }
 
 .dots {
