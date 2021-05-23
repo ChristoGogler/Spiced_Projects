@@ -2,6 +2,7 @@
 
 body {
     margin: 0;
+    box-sizing: border-box;
 }
 main {
 }
@@ -33,22 +34,48 @@ main {
     background-repeat: no-repeat;
     background-size: cover;
 }
-.slides {
+.slide {
     position: absolute;
     width: 100vw;
     height: 600px;
     display: inline-block;
     transform: translateX(100%);
 }
-.slides.onscreen {
+.slide.onscreen {
     transform: translateX(0);
 }
-.slides.exit {
+.slide.exit {
     transform: translateX(-100%);
 }
 
-.slides.onscreen,
-.slides.exit {
+.slide.onscreen,
+.slide.exit {
     transition: ease-out;
-    transition-duration: 2s;
+    transition-duration: 1s;
+}
+
+.dots {
+    position: relative;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    list-style-type: none;
+}
+
+.dot {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    margin: 20px 5px;
+
+    border: 2px solid pink;
+    border-radius: 50%;
+}
+.dot.current {
+    background-color: darksalmon;
 }

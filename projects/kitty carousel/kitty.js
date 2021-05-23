@@ -1,13 +1,15 @@
 console.log("Kitty.js Kitty Carousel");
 (function () {
     //setup
-    var DELAY = 5000;
+    var DELAY = 2500;
     var currentSlide = 0;
     var nextSlide = 1;
 
     var carousel = document.getElementById("carousel1");
-    var slides = carousel.querySelectorAll(".slides");
-
+    var allSlides = carousel.querySelectorAll(".slide");
+    var pagination = carousel.querySelectorAll(".dot");
+    console.log(carousel);
+    console.log(allSlides);
     function moveKitties() {
         // console.log(
         //     "currentSlide: ",
@@ -16,10 +18,10 @@ console.log("Kitty.js Kitty Carousel");
         //     slides[currentSlide]
         // );
 
-        slides[nextSlide].classList.add("onscreen");
-        slides[currentSlide].classList.add("exit");
-        slides[currentSlide].classList.remove("onscreen");
-
+        allSlides[nextSlide].classList.add("onscreen");
+        allSlides[currentSlide].classList.add("exit");
+        allSlides[currentSlide].classList.remove("onscreen");
+        updateDots(currentSlide, nextSlide);
         //  - current is always what next was before. (Diego)
         currentSlide = nextSlide;
 
@@ -33,7 +35,10 @@ console.log("Kitty.js Kitty Carousel");
         }
     }
 
-    function updateDots() {}
+    function updateDots(currentDot, nextDot) {
+        pagination[currentDot].classList.remove("current");
+        pagination[nextDot].classList.add("current");
+    }
 
     //add eventlistener
     carousel.addEventListener("transitionend", function (event) {
