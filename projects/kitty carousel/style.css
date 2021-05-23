@@ -1,0 +1,54 @@
+/* Kitty Carousel */
+
+body {
+    margin: 0;
+}
+main {
+}
+#carousel1 {
+    height: 600px;
+    width: 100vw;
+    /* overflow needs positioning */
+    position: relative;
+    overflow: hidden;
+}
+
+#kitty1 {
+    background-image: url("assets/kit1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#kitty2 {
+    background-image: url("assets/kit2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#kitty3 {
+    background-image: url("assets/kit3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#kitty4 {
+    background-image: url("assets/kit4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.slides {
+    position: absolute;
+    width: 100vw;
+    height: 600px;
+    display: inline-block;
+    transform: translateX(100%);
+}
+.slides.onscreen {
+    transform: translateX(0);
+}
+.slides.exit {
+    transform: translateX(-100%);
+}
+
+.slides.onscreen,
+.slides.exit {
+    transition: ease-out;
+    transition-duration: 2s;
+}
