@@ -6,7 +6,7 @@ console.log("Kitty.js Kitty Carousel");
     var nextSlide = 1;
     var carousel = document.getElementById("carousel1");
     var allSlides = carousel.querySelectorAll(".slide");
-
+    var timeout;
     var pagination = carousel.querySelectorAll(".dot");
     console.log(carousel);
     console.log(allSlides);
@@ -64,7 +64,7 @@ console.log("Kitty.js Kitty Carousel");
         //otherwise remove "exit" class
         event.target.classList.remove("exit");
         //call moveSlides after delay
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             moveSlides();
             updatePagination();
         }, DELAY);
@@ -75,6 +75,8 @@ console.log("Kitty.js Kitty Carousel");
     //add one listener to each dot
     pagination.forEach(function (dot, dotIndex) {
         dot.addEventListener("click", function (event) {
+            //stop the settimeout method
+            clearTimeout(timeout);
             // event.stopPropagation();
             //turn on the highlighter for the clicked dot
             dot.classList.toggle("current");
@@ -82,6 +84,9 @@ console.log("Kitty.js Kitty Carousel");
             pagination[currentSlide].classList.toggle("current");
             //change nextSlide to the clicked Index, so that the next slide will be the one clicked
             nextSlide = dotIndex;
+            //call moveslides and immediately move to clicked slide
+            moveSlides();
+            updatePagination();
         });
     });
 
