@@ -72,10 +72,14 @@ console.log("Kitty.js Kitty Carousel");
 
     //add event listener
     //when clicked on pagination dot
+    //add one listener to each dot
     pagination.forEach(function (dot, dotIndex) {
         dot.addEventListener("click", function (event) {
-            event.stopPropagation();
-            dot.classList.add("current");
+            // event.stopPropagation();
+            //turn on the highlighter for the clicked dot
+            dot.classList.toggle("current");
+            //turn it off for the previously highlighted
+            pagination[currentSlide].classList.toggle("current");
             //change nextSlide to the clicked Index, so that the next slide will be the one clicked
             nextSlide = dotIndex;
         });
