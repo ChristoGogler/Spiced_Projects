@@ -70,6 +70,7 @@ console.log("Canvas Exercises");
         outerCtx.beginPath();
         outerCtx.drawImage(document.querySelector("#innerCanvas"), x, y);
     }
+
     //function clearCanvas
     //1 parameter: 1) canvasContext
     function clearCanvas(ctx) {

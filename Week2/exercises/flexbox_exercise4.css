@@ -9,7 +9,7 @@ section {
     display: flex;
 }
 
-/* big squares size, positioning and margin in between each other */
+/* big squares size and margin in between each other */
 .big {
     width: 200px;
     height: 200px;
@@ -17,7 +17,7 @@ section {
     display: flex;
 }
 
-/* small squares size and absolute positioning */
+/* small squares size */
 .small {
     width: 100px;
     height: 100px;
