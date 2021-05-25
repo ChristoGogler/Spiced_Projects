@@ -74,24 +74,30 @@ main {
 .dot.current {
     background-color: darksalmon;
 }
+/* for tablet/smartphone landscape mode */
+@media (orientation: landscape) and (max-width: 1024px) {
+    #carousel1 {
+        height: 100vh;
+    }
+    .slide {
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+    .dots {
+        height: 100vh;
+    }
+}
 
 /* for medium screens/tablet */
 @media screen and (max-width: 768px) {
     .dot {
     }
     .dots {
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
         height: 100vh;
-        margin: 0;
-        padding: 0;
-        z-index: 1;
-        list-style-type: none;
     }
     #carousel1 {
         height: 100vh;
-        width: 100vw;
     }
     .slide {
         height: 100vh;
@@ -119,7 +125,6 @@ main {
     }
     #carousel1 {
         height: 100vh;
-        width: 100vw;
     }
     .slide {
         height: 100vh;

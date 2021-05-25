@@ -25,13 +25,14 @@ console.log("Kitty.js Kitty Carousel");
         allSlides[currentSlide].classList.add("exit");
         allSlides[currentSlide].classList.remove("onscreen");
         updateSlidesIndex();
+        updatePagination();
     }
 
     function updateSlidesIndex() {
         //  - current is always what next was before. (Diego)
         currentSlide = nextSlide;
 
-        if (nextSlide >= 3) {
+        if (nextSlide >= allSlides.length - 1) {
             // console.log("IF next:", nextSlide);
             nextSlide = 0;
         } else {
@@ -46,7 +47,7 @@ console.log("Kitty.js Kitty Carousel");
     //do: remove class current from current dot, add to nextdot
     //no return
     function updatePagination() {
-        //loop all dots and remove "current" for all that are not current, add "current" to next
+        //loop all dots and remove "current" for all that are not current, add "current" to currentSlide
         pagination.forEach(function (dot, index) {
             //second parameter will force the class name to be added or removed based on the truthiness
             dot.classList.toggle("current", index == currentSlide);
@@ -60,13 +61,12 @@ console.log("Kitty.js Kitty Carousel");
         if (!event.target.classList.contains("exit")) {
             return;
         }
-        console.log("slide transitioned event", event);
+        // console.log("slide transitioned event", event);
         //otherwise remove "exit" class
         event.target.classList.remove("exit");
         //call moveSlides after delay
         timeout = setTimeout(function () {
             moveSlides();
-            updatePagination();
         }, DELAY);
     });
 
@@ -75,13 +75,13 @@ console.log("Kitty.js Kitty Carousel");
         console.log("touchmove event", event.touches, event.type);
     });
 
-    //add event listener: CLICK & TOUCHSTART on eachdot
+    //add event listener: CLICK & TOUCHSTART on each dot
     //for each dot add a click and touch listener
     pagination.forEach(function (dot, dotIndex) {
         //add event listener: CLICK
         //when clicked on pagination dot
         dot.addEventListener("click", function (event) {
-            console.log("click event", event);
+            console.log("click event", dotIndex, event);
             dotClickHandler(dot, dotIndex, event);
         });
         //add event listener: TOUCH
@@ -89,33 +89,36 @@ console.log("Kitty.js Kitty Carousel");
         dot.addEventListener("touchstart", function (event) {
             console.log("touchstart event", event.touches, event.type);
             event.stopPropagation();
-            dotTouchHandler(dot, dotIndex, event);
+            dotTouchHandler(dot, dotIndex);
         });
     });
 
     //dot touch HANDLER
-    function dotTouchHandler(dot, dotIndex, event) {
-        dotClickHandler(dot, dotIndex, event);
+    function dotTouchHandler(dot, dotIndex) {
+        dotClickHandler(dot, dotIndex);
     }
 
     // dot click Handler
-    function dotClickHandler(dot, dotIndex, event) {
-        //stop the settimeout method
-        clearTimeout(timeout);
-        //turn on the highlighter for the clicked dot
-        dot.classList.toggle("current");
-        //turn it off for the previously highlighted
-        pagination[currentSlide].classList.toggle("current");
-        //change nextSlide to the clicked Index, so that the next slide will be the one clicked
-        nextSlide = dotIndex;
-        //call moveslides and immediately move to clicked slide
-        moveSlides();
-        updatePagination();
+    function dotClickHandler(dot, dotIndex) {
+        //if user clicks on current dot/slide, ignore
+        if (dotIndex != currentSlide) {
+            //stop the settimeout method
+            clearTimeout(timeout);
+            //turn on the highlighter for the clicked dot
+            dot.classList.toggle("current");
+            //turn it off for the previously highlighted
+            pagination[currentSlide].classList.toggle("current");
+            //change nextSlide to the clicked Index, so that the next slide will be the one clicked
+            nextSlide = dotIndex;
+            //call moveslides and immediately move to clicked slide
+            moveSlides();
+            // updatePagination();
+        }
     }
 
     //initial call moveSlides
     setTimeout(function () {
         moveSlides();
-        updatePagination();
+        // updatePagination();
     }, DELAY);
 })();
