@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+}
+#outerCanvas {
+}
+#innerCanvas {
+}
+.canvas {
+    border: 2px seagreen double;
+}
