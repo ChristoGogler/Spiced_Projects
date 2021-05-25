@@ -2,6 +2,7 @@ console.log("Kitty.js Kitty Carousel");
 (function () {
     //setup
     var DELAY = 2000;
+    var SWIPEDISTANCE = 150;
     var currentSlide = 0;
     var nextSlide = 1;
     var carousel = document.getElementById("carousel1");
@@ -9,21 +10,29 @@ console.log("Kitty.js Kitty Carousel");
     var timeout;
     var pagination = carousel.querySelectorAll(".dot");
     var isAnimating = false;
-    // console.log(carousel);
-    // console.log(allSlides);
+
+    var swipe = {
+        startX: null,
+        endX: null,
+    };
+
+    setupCarousel();
+
+    function setupCarousel() {
+        //initial call moveSlides
+        timeout = setTimeout(moveSlides, DELAY);
+    }
 
     // function moveSlides
     // 0 parameter
     //do: add onscreen class to next slide and remove from current slide, add exit class to current slide
-    //then update/increment the currentslide/nextslide indexes
+    //call updateSlidesIndex
     //call updatePagination
     //no return
     function moveSlides() {
         //animation starts now
         isAnimating = true;
-        // console.log("allSlides", allSlides);
-        // console.log("nextSlide", nextSlide);
-        // console.log("allSlides[nextSlide]", allSlides[nextSlide]);
+
         allSlides[nextSlide].classList.add("onscreen");
         allSlides[currentSlide].classList.add("exit");
         allSlides[currentSlide].classList.remove("onscreen");
@@ -31,17 +40,18 @@ console.log("Kitty.js Kitty Carousel");
         updatePagination();
     }
 
+    // function updateSlidesIndex
+    // 0 parameter
+    //do: update/increment the currentslide/nextslide indexes
+    //no return
     function updateSlidesIndex() {
         //  - current is always what next was before. (Diego)
         currentSlide = nextSlide;
 
         if (nextSlide >= allSlides.length - 1) {
-            // console.log("IF next:", nextSlide);
             nextSlide = 0;
         } else {
             nextSlide++;
-            // console.log("ELSE next:", nextSlide);
-            // console.log("ELSE current:", currentSlide);
         }
     }
 
@@ -73,9 +83,17 @@ console.log("Kitty.js Kitty Carousel");
         isAnimating = false;
     });
 
+    //add eventlistener: TOUCHSTART on carousel
+    carousel.addEventListener("touchstart", function (event) {
+        carouselTouchstartEventHandler(event);
+    });
     //add eventlistener: TOUCHMOVE on carousel
     carousel.addEventListener("touchmove", function (event) {
-        console.log("touchmove event", event.touches, event.type);
+        carouselTouchmoveEventHandler(event);
+    });
+    //add eventlistener: TOUCHEND on carousel
+    carousel.addEventListener("touchend", function (event) {
+        carouselTouchendEventHandler(event);
     });
 
     //add event listener: CLICK & TOUCHSTART on each dot
@@ -90,23 +108,47 @@ console.log("Kitty.js Kitty Carousel");
         //add event listener: TOUCH
         //when touch on dot
         dot.addEventListener("touchstart", function (event) {
-            console.log("touchstart event", event.touches, event.type);
+            //stop bubbling to carousel
             event.stopPropagation();
             dotTouchHandler(dot, dotIndex);
         });
     });
 
-    //dot touch HANDLER
+    //DOT TOUCH HANDLER
     function dotTouchHandler(dot, dotIndex) {
         dotClickHandler(dot, dotIndex);
     }
 
-    // dot click Handler
+    //TOUCHSTART EVENT HANDLER on carousel
+    function carouselTouchstartEventHandler(event) {
+        swipe.startX = event.touches[0].pageX;
+    }
+    //TOUCHMOVE EVENT HANDLER on carousel
+    function carouselTouchmoveEventHandler(event) {
+        swipe.endX = event.touches[0].pageX;
+    }
+
+    //TOUCHEND EVENT HANDLER on carousel
+    function carouselTouchendEventHandler(event) {
+        //if the slides are currently animating, ignore!
+        if (isAnimating) {
+            return;
+        }
+        //if swipe start point minus swipe endpoint is at least 200 register as a swipe
+        if (swipe.startX - swipe.endX > SWIPEDISTANCE) {
+            //stop the settimeout method
+            clearTimeout(timeout);
+            moveSlides();
+        }
+    }
+
+    // DOT CLICK HANDLER
     function dotClickHandler(dot, dotIndex) {
         //if user clicks on current dot/slide, ignore
         if (dotIndex == currentSlide) {
             return;
         }
+        //if the slides are currently animating, ignore!
         if (isAnimating) {
             return;
         }
@@ -121,7 +163,4 @@ console.log("Kitty.js Kitty Carousel");
         //call moveslides and immediately move to clicked slide
         moveSlides();
     }
-
-    //initial call moveSlides
-    timeout = setTimeout(moveSlides, DELAY);
 })();
