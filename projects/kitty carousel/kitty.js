@@ -80,10 +80,10 @@ console.log("Kitty.js Kitty Carousel");
     pagination.forEach(function (dot, dotIndex) {
         //add event listener: CLICK
         //when clicked on pagination dot
-        // dot.addEventListener("click", function (event) {
-        //     console.log("click event", event);
-        //     dotClickHandler(dot, dotIndex, event);
-        // });
+        dot.addEventListener("click", function (event) {
+            console.log("click event", event);
+            dotClickHandler(dot, dotIndex, event);
+        });
         //add event listener: TOUCH
         //when touch on dot
         dot.addEventListener("touchstart", function (event) {

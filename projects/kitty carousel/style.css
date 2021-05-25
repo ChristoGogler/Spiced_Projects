@@ -49,12 +49,13 @@ main {
 }
 
 .dots {
-    position: relative;
+    position: absolute;
+    width: 100vw;
     height: 600px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-
+    border: 1px dotted green;
     margin: 0;
     padding: 0;
     z-index: 1;
@@ -67,7 +68,7 @@ main {
     height: 20px;
     margin: 20px 5px;
 
-    border: 2px solid pink;
+    border: 2px solid darksalmon;
     border-radius: 50%;
 }
 .dot.current {
@@ -104,13 +105,13 @@ main {
     .dot {
         width: 10px;
         height: 10px;
-        margin: 5px 2px;
+        margin: 20px 10px;
     }
     .dots {
         display: flex;
         justify-content: center;
         align-items: flex-end;
-
+        height: 100vh;
         margin: 0;
         padding: 0;
         z-index: 1;
