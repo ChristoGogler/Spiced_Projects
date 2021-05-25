@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+}
+
+main {
+    /* background-color: coral; */
+}
+/* section containing all squares,  */
+#squares {
+    margin: 10px 8px;
+}
+
+/* big squares size and margin in between each other */
+.big {
+    width: 200px;
+    height: 200px;
+    margin: 0 2px;
+    display: inline-grid;
+    vertical-align: top;
+    grid-template: 50% 50% / 50% 50%;
+}
+
+/* small squares size */
+.small {
+    width: 100px;
+    height: 100px;
+}
+
+/* positioning in grid */
+.topleft {
+    grid-row: 1;
+    grid-column: 1;
+}
+.topright {
+    grid-row: 1;
+    grid-column: 2;
+}
+
+.bottomleft {
+    grid-row: 2;
+    grid-column: 1;
+}
+.bottomright {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+/* background colours for the squares */
+.grey {
+    background-color: grey;
+}
+
+.black {
+    background-color: black;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.purple {
+    background-color: purple;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.green {
+    background-color: green;
+}
+
+.pink {
+    background-color: pink;
+}
