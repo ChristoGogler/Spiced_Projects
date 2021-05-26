@@ -11,8 +11,9 @@ console.log("welcome_SPICED.js");
     function toggleNavigation() {
         var nav = document.querySelector("nav");
         nav.classList.toggle("open");
+
         document.body.classList.toggle("backdrop");
-        hamburgerButton.firstElementChild.classList.toggle("close");
+        hamburgerButton.classList.toggle("clicked");
     }
     //add eventlistener to esc key
     document.addEventListener("keydown", function (event) {
