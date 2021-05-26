@@ -67,6 +67,48 @@ nav a {
 nav ul {
     list-style-type: none;
 }
+
+.modal.backdrop {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(188, 143, 143, 0.7);
+    /* opacity: 90%; */
+    z-index: 2;
+}
+.modal .popup {
+    text-align: center;
+    width: 50vw;
+    padding: 10px;
+    height: 40vh;
+    background-color: whitesmoke;
+    border-radius: 25px;
+    opacity: 100%;
+    z-index: 5;
+}
+.modal .cancelButton {
+    width: 20px;
+    height: 20px;
+    float: right;
+    background: none;
+    border-radius: 50%;
+    border: 2px solid whitesmoke;
+    overflow: hidden;
+}
+.modal .cancelButton:hover {
+    cursor: pointer;
+}
+.cancelButton img {
+    width: inherit;
+}
+.hidden {
+    display: none !important;
+}
 #logout {
     font-size: 1rem;
 }
