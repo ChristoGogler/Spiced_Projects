@@ -102,7 +102,7 @@ console.log("Kitty.js Kitty Carousel");
         //add event listener: CLICK
         //when clicked on pagination dot
         dot.addEventListener("click", function (event) {
-            console.log("click event", dotIndex, event);
+            // console.log("click event", dotIndex, event);
             dotClickHandler(dot, dotIndex);
         });
         //add event listener: TOUCH
