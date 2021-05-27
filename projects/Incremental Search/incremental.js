@@ -59,16 +59,19 @@
 
     // 2/6) MOUSEOVER/ENTER EVENT LISTENER - when mouse over the individual results
     $resultsContainer.on("mouseenter", ".indiResult", function () {
-        console.log("this", $(this));
         var $element = $(this);
-        console.log("element", $element);
         $(".highlighted").removeClass("highlighted");
         $element.addClass("highlighted");
     });
 
-    // 3/6) mousedown event
+    // 3/6) MOUSEDOWN EVENT LISTENER - when mousedown on suggestion add that value to textfield
+    $resultsContainer.on("mousedown", ".highlighted", function () {
+        var $element = $(this);
+        $inputField.val($element.html());
+        resetVariables();
+    });
 
-    // 4/6) keydown event
+    // 4/6) KEYDOWN EVENT LISTENER - when user presses arrow up/down or return
 
     // 5/6) focus event
 
