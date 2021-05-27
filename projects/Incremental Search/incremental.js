@@ -95,28 +95,7 @@
     //TEXTFIELD INPUT HANDLER
     function textfieldInputHandler(element) {
         var $value = $(element).val();
-        suggestions = [];
-
-        //if value is empty, empty suggestions & hide suggestionsContainer
-        if ($value == "") {
-            resetSuggestions();
-            return;
-        }
-
-        for (var i = 0; i < countries.length; i++) {
-            //if input matches the start of a country
-            if (countries[i].toLowerCase().startsWith($value.toLowerCase())) {
-                //add it to the suggestions array
-                suggestions.push(countries[i]);
-                console.log(suggestions);
-            }
-            //if array contains 4 elements stop searching
-            if (suggestions.length > 3) {
-                break;
-            }
-        }
-        $suggestionsContainer.html(getHTMLString());
-        $suggestionsContainer.removeClass("hidden");
+        getAndShowSuggestions($value);
     }
 
     //function getHTMLString
@@ -142,6 +121,35 @@
         }
         return htmlString;
     }
+    //function getAndShowSuggestions
+    //1 parameter: inputValue - the value the user has typed into the textfield
+    //do: get all the matching suggestions and make them visible
+    //return: early return if value is empty
+    function getAndShowSuggestions(inputValue) {
+        suggestions = [];
+        //if value is empty, empty suggestions & hide suggestionsContainer
+        if (inputValue == "") {
+            resetSuggestions();
+            return;
+        }
+
+        for (var i = 0; i < countries.length; i++) {
+            //if input matches the start of a country
+            if (
+                countries[i].toLowerCase().startsWith(inputValue.toLowerCase())
+            ) {
+                //add it to the suggestions array
+                suggestions.push(countries[i]);
+            }
+            //if array contains 4 elements stop searching
+            if (suggestions.length > 3) {
+                break;
+            }
+        }
+        //create htmlstring and make suggestions element visible
+        $suggestionsContainer.html(getHTMLString());
+        $suggestionsContainer.removeClass("hidden");
+    }
 
     //function resetSuggestions
     //0 parameter
@@ -152,7 +160,7 @@
         $suggestionsContainer.html("");
         $suggestionsContainer.addClass("hidden");
     }
-
+    //array of countries
     var countries = [
         "Afghanistan",
         "Albania",
