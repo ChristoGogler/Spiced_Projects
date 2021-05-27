@@ -15,7 +15,6 @@ main {
     border: 1px solid palevioletred;
 }
 .results {
-    display: none;
     /* margin-top: 2px; */
     /* background-color: blueviolet; */
     border: 1px solid palevioletred;
@@ -30,7 +29,15 @@ main {
     padding: 5px;
     font-size: 0.5rem;
 }
+.results .indiResult:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 
 .results .highlighted {
     background-color: khaki;
+}
+
+.hidden {
+    display: none;
 }

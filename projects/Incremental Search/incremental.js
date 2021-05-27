@@ -4,29 +4,28 @@
     //cache elements
     var $inputField = $(".textInput");
     var $resultsContainer = $(".results");
-    console.log($resultsContainer);
+    var suggestions;
 
-    // 1/6) input event - when textfield input changes
+    function resetVariables() {
+        suggestions = [];
+        $resultsContainer.html("");
+        $resultsContainer.addClass("hidden");
+    }
+
+    // 1/6) INPUT EVENT LISTENER - when textfield input changes
     $inputField.on("input", function (event) {
-        // console.log("event ", event);
-        // console.log("this", this);
         var value = $(this).val();
-        var suggestions = [];
-        // console.log("value", value);
+        suggestions = [];
 
         //if value is empty, empty suggestions & hide resultsContainer
         if (value == "") {
-            suggestions = [];
-            $resultsContainer.html("");
-            $resultsContainer.css({ display: "none" });
+            resetVariables();
             return;
         }
 
         for (var i = 0; i < countries.length; i++) {
-            // console.log(countries[i]);
             //if input matches the start of a country
             if (countries[i].toLowerCase().startsWith(value.toLowerCase())) {
-                // console.log(countries[i]);
                 //add it to the suggestions array
                 suggestions.push(countries[i]);
                 console.log(suggestions);
@@ -40,8 +39,10 @@
         var htmlString = "";
         if (suggestions.length == 0) {
             // show no results
-            htmlString = "<div class='indiResult'>No results!</div>";
+            htmlString =
+                "<div class='indiResult'>Sorry - We couldn't find a match.</div>";
             $resultsContainer.html(htmlString);
+            //otherwise create a string containing html elements wrapping the suggestions
         } else {
             htmlString = "";
             suggestions.forEach(function createHTMLString(country, index) {
@@ -53,10 +54,17 @@
             });
             $resultsContainer.html(htmlString);
         }
-        $resultsContainer.css({ display: "block" });
+        $resultsContainer.removeClass("hidden");
     });
 
-    // 2/6) mouseover/mouseenter event - when mouse over the individual results
+    // 2/6) MOUSEOVER/ENTER EVENT LISTENER - when mouse over the individual results
+    $resultsContainer.on("mouseenter", ".indiResult", function () {
+        console.log("this", $(this));
+        var $element = $(this);
+        console.log("element", $element);
+        $(".highlighted").removeClass("highlighted");
+        $element.addClass("highlighted");
+    });
 
     // 3/6) mousedown event
 
