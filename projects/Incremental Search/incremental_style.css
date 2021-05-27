@@ -1,0 +1,36 @@
+* {
+    font-size: 24pt;
+    font-family: Helvetica, Verdana, Tahoma, "Trebuchet MS", sans-serif;
+}
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    margin: 50px;
+}
+.textInput {
+    border: 1px solid palevioletred;
+}
+.results {
+    display: none;
+    /* margin-top: 2px; */
+    /* background-color: blueviolet; */
+    border: 1px solid palevioletred;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    /* height: 2em; */
+}
+
+.results .indiResult {
+    border-top: 1px solid palevioletred;
+    padding: 5px;
+    font-size: 0.5rem;
+}
+
+.results .highlighted {
+    background-color: khaki;
+}
