@@ -3,29 +3,109 @@
 
     //cache elements
     var $inputField = $(".textInput");
-    var $resultsContainer = $(".results");
+    var $suggestionsContainer = $(".suggestions");
     var suggestions;
 
-    function resetVariables() {
-        suggestions = [];
-        $resultsContainer.html("");
-        $resultsContainer.addClass("hidden");
+    // 1/6) INPUT EVENT LISTENER - when textfield input changes
+    $inputField.on("input", function () {
+        textfieldInputHandler($(this));
+    });
+
+    // 2/6) MOUSEOVER/ENTER EVENT LISTENER - when mouse over the individual suggestions
+    $suggestionsContainer
+        .on("mouseenter", ".oneSuggestion", function () {
+            suggestionsMouseenterHandler($(this));
+        })
+
+        // 3/6) MOUSEDOWN EVENT LISTENER - when mousedown on suggestion add that value to textfield
+        .on("mousedown", ".highlighted", function () {
+            suggestionsMousedownHandler($(this));
+        });
+
+    // 4/6) KEYDOWN EVENT LISTENER - when user presses arrow up/down or return
+    $inputField
+        .on("keydown", function (event) {
+            textfieldKeydownHandler(event);
+        })
+
+        // 5/6) FOCUS EVENT LISTENER - when the textfield gets a focus
+        .on("focus", function () {
+            textfieldInputHandler($(this));
+        })
+        // 6/6) BLUR EVENT LISTENER - when the textfield looses the focus
+        .on("blur", function () {
+            resetSuggestions();
+        });
+
+    //SUGGESTIONS MOUSEENTER HANDLER
+    function suggestionsMouseenterHandler(element) {
+        var $element = $(element);
+        $(".highlighted").removeClass("highlighted");
+        $element.addClass("highlighted");
     }
 
-    // 1/6) INPUT EVENT LISTENER - when textfield input changes
-    $inputField.on("input", function (event) {
-        var value = $(this).val();
+    //SUGGESTIONS MOUSEDOWN HANDLER
+    function suggestionsMousedownHandler(element) {
+        var $element = $(element);
+        $inputField.val($element.html());
+        resetSuggestions();
+    }
+
+    //textfield KEYDOWN HANDLER
+    function textfieldKeydownHandler(event) {
+        var $highlighted = $(".highlighted");
+        switch (event.code) {
+            //ARROW DOWN - change the highlighted element
+            case "ArrowDown":
+                if ($(".suggestions div:last-child").hasClass("highlighted")) {
+                    //last element highlighted --> do nothing
+                    break;
+                } else if ($highlighted.length == 0) {
+                    //none highlighted --> highlight first element
+                    $(".oneSuggestion").first().addClass("highlighted");
+                } else {
+                    //middle element highlighted --> highlight next element
+                    $highlighted.removeClass("highlighted");
+                    $highlighted.next().addClass("highlighted");
+                }
+                break;
+            //ARROW UP - change the highlighted element
+            case "ArrowUp":
+                if ($(".suggestions div:first-child").hasClass("highlighted")) {
+                    //first element highlighted --> do nothing
+                    break;
+                } else if ($highlighted.length == 0) {
+                    //none highlighted --> highlight last element
+                    $(".oneSuggestion").last().addClass("highlighted");
+                } else {
+                    //middle element highlighted --> highlight prev element
+                    $highlighted.removeClass("highlighted");
+                    $highlighted.prev().addClass("highlighted");
+                }
+                break;
+            //ENTER - enter value of highlighted element into the textfield
+            case "Enter":
+                $inputField.val($highlighted.html());
+                resetSuggestions();
+                break;
+            default:
+                break;
+        }
+    }
+    //TEXTFIELD INPUT HANDLER
+    function textfieldInputHandler(element) {
+        var $value = $(element).val();
         suggestions = [];
 
-        //if value is empty, empty suggestions & hide resultsContainer
-        if (value == "") {
-            resetVariables();
+        //if value is empty, empty suggestions & hide suggestionsContainer
+        if ($value == "") {
+            resetSuggestions();
             return;
         }
 
         for (var i = 0; i < countries.length; i++) {
             //if input matches the start of a country
-            if (countries[i].toLowerCase().startsWith(value.toLowerCase())) {
+            if (countries[i].toLowerCase().startsWith($value.toLowerCase())) {
                 //add it to the suggestions array
                 suggestions.push(countries[i]);
                 console.log(suggestions);
@@ -35,47 +115,43 @@
                 break;
             }
         }
+        $suggestionsContainer.html(getHTMLString());
+        $suggestionsContainer.removeClass("hidden");
+    }
+
+    //function getHTMLString
+    //0 parameter
+    //do: create a string of all suggestions within html elements or "not found! message
+    //return: string
+    function getHTMLString() {
+        var htmlString;
         //if no countries match the input
-        var htmlString = "";
         if (suggestions.length == 0) {
-            // show no results
+            // show no suggestions
             htmlString =
-                "<div class='indiResult'>Sorry - We couldn't find a match.</div>";
-            $resultsContainer.html(htmlString);
+                "<div class='oneSuggestion'>Sorry - We couldn't find a match.</div>";
             //otherwise create a string containing html elements wrapping the suggestions
         } else {
             htmlString = "";
             suggestions.forEach(function createHTMLString(country, index) {
-                htmlString += "<div class='indiResult'>";
-                // console.log("suggestions[index]", suggestions[index]);
+                htmlString += "<div class='oneSuggestion'>";
+
                 htmlString += suggestions[index];
                 htmlString += "</div>";
-                // console.log("HTMLString", htmlString);
             });
-            $resultsContainer.html(htmlString);
         }
-        $resultsContainer.removeClass("hidden");
-    });
+        return htmlString;
+    }
 
-    // 2/6) MOUSEOVER/ENTER EVENT LISTENER - when mouse over the individual results
-    $resultsContainer.on("mouseenter", ".indiResult", function () {
-        var $element = $(this);
-        $(".highlighted").removeClass("highlighted");
-        $element.addClass("highlighted");
-    });
-
-    // 3/6) MOUSEDOWN EVENT LISTENER - when mousedown on suggestion add that value to textfield
-    $resultsContainer.on("mousedown", ".highlighted", function () {
-        var $element = $(this);
-        $inputField.val($element.html());
-        resetVariables();
-    });
-
-    // 4/6) KEYDOWN EVENT LISTENER - when user presses arrow up/down or return
-
-    // 5/6) focus event
-
-    // 6/6) blur event
+    //function resetSuggestions
+    //0 parameter
+    //do: reset suggestions array and html of suggestions container; hide the suggestions container
+    //return: none
+    function resetSuggestions() {
+        suggestions = [];
+        $suggestionsContainer.html("");
+        $suggestionsContainer.addClass("hidden");
+    }
 
     var countries = [
         "Afghanistan",

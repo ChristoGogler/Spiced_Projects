@@ -1,45 +1,50 @@
 * {
     font-size: 24pt;
     font-family: Helvetica, Verdana, Tahoma, "Trebuchet MS", sans-serif;
+    box-sizing: border-box;
 }
 body {
     margin: 0;
     display: flex;
     justify-content: center;
 }
+p {
+    font-size: 0.45rem;
+}
 
 main {
     margin: 50px;
+    width: 500px;
 }
 .textInput {
     border: 1px solid palevioletred;
-    width: 400px;
+    width: 100%;
     padding: 10px;
     font-size: 0.5rem;
 }
-.results {
-    /* margin-top: 2px; */
-    /* background-color: blueviolet; */
+.suggestions {
     border: 1px solid palevioletred;
     border-top: none;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    /* height: 2em; */
 }
 
-.results .indiResult {
-    border-top: 1px solid palevioletred;
+.suggestions .oneSuggestion {
+    /* border-top: 1px solid palevioletred; */
     padding: 5px;
     font-size: 0.5rem;
     cursor: pointer;
 }
-.results .indiResult:last-child {
+.suggestions .oneSuggestion:last-child {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
-.results .highlighted {
-    background-color: khaki;
+.suggestions .highlighted {
+    background-color: palevioletred;
+    /* font-weight: bold; */
+    color: white;
+    transition: color 0.2s ease;
 }
 
 .hidden {
