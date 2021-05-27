@@ -79,7 +79,7 @@ nav ul {
     height: 100vh;
     background-color: rgba(188, 143, 143, 0.7);
     /* opacity: 90%; */
-    z-index: 2;
+    z-index: 3;
 }
 .modal .popup {
     text-align: center;
