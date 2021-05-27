@@ -132,14 +132,22 @@
             resetSuggestions();
             return;
         }
-
+        //loop over all countries
         for (var i = 0; i < countries.length; i++) {
-            //if input matches the start of a country
-            if (
-                countries[i].toLowerCase().startsWith(inputValue.toLowerCase())
-            ) {
-                //add it to the suggestions array
-                suggestions.push(countries[i]);
+            //split country names with more than 1 word
+            var splitCountryName = countries[i].split(" ");
+
+            //loop over each individual word of a name
+            for (var j = 0; j < splitCountryName.length; j++) {
+                //if input matches the start of a country (any word of the name)
+                if (
+                    splitCountryName[j]
+                        .toLowerCase()
+                        .startsWith(inputValue.toLowerCase())
+                ) {
+                    //add country to the suggestions array
+                    suggestions.push(countries[i]);
+                }
             }
             //if array contains 4 elements stop searching
             if (suggestions.length > 3) {
