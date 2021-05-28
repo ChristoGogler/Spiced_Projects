@@ -3,7 +3,7 @@ console.log("connect4.js -- CONNECT FOUR");
 // var rowsAndColumns = [];
 var $board = $(".board");
 var $columns = $board.find(".column");
-
+var $allSlots = $board.find(".slot");
 var $playerYin = $(".yin");
 var $playerYang = $(".yang");
 var yin;
@@ -13,6 +13,21 @@ var coinsPlaced = 0;
 var possibleColumnWin;
 var possibleRowWin;
 var possibleDiagonalWin;
+
+var allDiagonals = [
+    [2, 9, 16, 23],
+    [1, 8, 15, 22, 29],
+    [0, 7, 14, 21, 28, 35],
+    [6, 13, 20, 27, 34, 41],
+    [12, 19, 26, 33, 40],
+    [18, 25, 32, 39],
+    [23, 28, 33, 38],
+    [17, 22, 27, 32, 37],
+    [11, 16, 21, 26, 31, 36],
+    [5, 10, 15, 20, 25, 30],
+    [4, 9, 14, 19, 24],
+    [3, 8, 13, 28],
+];
 
 initNewGame();
 function initNewGame() {
@@ -79,7 +94,11 @@ function checkVictoryPreConditions($column, $slots, columnIndex, rowIndex) {
         }
 
         //4) check for DIAGONAL CONDITION
-        //.......
+        //there must be at least 10 coins placed
+        //there must be at least one coin in row 2 & one coin in row 3 ( column index one left/right of coin in row2)
+        if (coinsPlaced > 9) {
+            possibleDiagonalWin = true;
+        }
     }
 
     return possibleColumnWin || possibleRowWin || possibleDiagonalWin;
@@ -89,7 +108,7 @@ function checkVictoryPreConditions($column, $slots, columnIndex, rowIndex) {
 //return:
 function checkVictory($positions) {
     var $winningSlots = $();
-    console.log("Length", $positions.length);
+    // console.log("Length", $positions.length);
     for (var i = 0; i < $positions.length; i++) {
         if ($positions.eq(i).hasClass(currentPlayer.id)) {
             $winningSlots = $winningSlots.add($positions.eq(i));
@@ -150,14 +169,26 @@ $columns.on("click", function () {
                     $columns.eq(i).find(".slot").eq(rowIndex)
                 );
             }
-            console.log("$slotsInRow", $slotsInRow);
+            // console.log("$slotsInRow", $slotsInRow);
             checkVictory($slotsInRow);
         }
 
         //checkVictory for diagonal
         if (possibleDiagonalWin) {
             console.log("diagonal win possible?", possibleDiagonalWin);
-            checkVictory();
+
+            allDiagonals.forEach(function (diagIndexes) {
+                var $diagonal = $();
+                // console.log("diagIndexes LENGTH", diagIndexes.length);
+                for (var i = 0; i < diagIndexes.length; i++) {
+                    $diagonal = $diagonal.add($allSlots.eq(diagIndexes[i]));
+
+                    // console.log("$allSlots.eq(i)", $allSlots.eq(i));
+                }
+                // console.log("$diagonal", $diagonal);
+                checkVictory($diagonal);
+            });
+            // console.log("$diagonal", $diagonal);
         }
         nextPlayer();
     }
