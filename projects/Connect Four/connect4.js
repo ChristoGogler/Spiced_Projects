@@ -89,14 +89,17 @@ function checkVictoryPreConditions($column, $slots, columnIndex, rowIndex) {
 //return:
 function checkVictory($positions) {
     var $winningSlots = $();
-    for (var i = $positions.length - 1; i >= 0; i--) {
-        console.log("checkVictory", i, $positions.eq(i));
+    console.log("Length", $positions.length);
+    for (var i = 0; i < $positions.length; i++) {
         if ($positions.eq(i).hasClass(currentPlayer.id)) {
             $winningSlots = $winningSlots.add($positions.eq(i));
+        } else {
+            $winningSlots = $();
         }
-        console.log("$winningSlots", $winningSlots);
+
         if ($winningSlots.length > 3) {
             console.log(currentPlayer.id, "WIN!");
+            console.log("$winningSlots", $winningSlots);
             return $winningSlots;
         }
     }
@@ -114,34 +117,41 @@ $columns.on("click", function () {
     //get column that was clicked on
     var $clickedColumn = $(this);
     // get all slots in that column
-    var $slots = $clickedColumn.find(".slot");
+    var $slotsInColumn = $clickedColumn.find(".slot");
     //get index of columns and rows
     var columnIndex = $columns.index($clickedColumn);
-    var coinSlot = placeCoin($slots);
+    var rowIndex = placeCoin($slotsInColumn);
 
     //as long as a column is not completely occupied by coins
-    if (coinSlot > 0) {
+    if (rowIndex >= 0) {
         //check for winning situation condition
         //1) column: pos 2 & pos3 in that column have to be occupied by same player
         //2) row: pos 3 in that row has to be occupied
         //3)diagonal: ??
         var isWinningCondition = checkVictoryPreConditions(
             $clickedColumn,
-            $slots,
+            $slotsInColumn,
             columnIndex,
-            coinSlot
+            rowIndex
         );
         // console.log("isWinningCondition", isWinningCondition);
         //checkVictory for column
         if (possibleColumnWin) {
             console.log("column win possible?", possibleColumnWin);
-            checkVictory($slots);
+            checkVictory($slotsInColumn);
         }
 
         //checkVictory for row
         if (possibleRowWin) {
             console.log("row win possible?", possibleRowWin);
-            checkVictory($slots);
+            var $slotsInRow = $();
+            for (var i = 0; i < $columns.length; i++) {
+                $slotsInRow = $slotsInRow.add(
+                    $columns.eq(i).find(".slot").eq(rowIndex)
+                );
+            }
+            console.log("$slotsInRow", $slotsInRow);
+            checkVictory($slotsInRow);
         }
 
         //checkVictory for diagonal
