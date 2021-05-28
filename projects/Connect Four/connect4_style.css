@@ -1,0 +1,99 @@
+* {
+    font-size: 24pt;
+    font-family: Helvetica, Verdana, Tahoma, "Trebuchet MS", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+nav {
+}
+
+header {
+    /* height: 150px; */
+    display: flex;
+    justify-content: center;
+}
+main {
+    display: flex;
+    justify-content: center;
+}
+
+footer {
+    width: 100vw;
+    position: absolute;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    top: 50vh;
+}
+h1 {
+}
+.board {
+    display: flex;
+}
+.slot {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.player {
+    min-width: 100px;
+    height: 100px;
+    margin: 50px;
+    border-radius: 50%;
+}
+.red {
+    /* border: palevioletred; */
+    background-color: palevioletred;
+}
+.blue {
+    /* border: cadetblue; */
+    background-color: cadetblue;
+}
+.yin {
+}
+.yang {
+}
+.yourTurn {
+    transform: scale(1.5);
+    transition: transform 0.3s ease;
+}
+
+/* for small screens/smartphone */
+@media screen and (max-width: 640px) {
+    header {
+        height: auto;
+    }
+    main {
+        /* flex-direction: column; */
+    }
+    footer {
+        justify-content: center;
+    }
+    .board {
+    }
+    .slot {
+        width: 30px;
+        height: 30px;
+        margin: 4px;
+    }
+    .player {
+        min-width: 50px;
+        height: 50px;
+        margin: 10px;
+        display: flex;
+        position: relative;
+    }
+    .yin {
+        align-items: flex-start;
+    }
+    .yang {
+        align-items: flex-start;
+    }
+}
