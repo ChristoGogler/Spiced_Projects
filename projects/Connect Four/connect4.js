@@ -49,13 +49,13 @@ function nextPlayer() {
     console.log("Current Player is " + currentPlayer.id);
 }
 
-//checkWinningConditions
+//checkVictoryPreConditions
 //parameter:
 //return:
-function checkWinningConditions($column, $slots, columnIndex, rowIndex) {
+function checkVictoryPreConditions($column, $slots, columnIndex, rowIndex) {
     //1) there must be at least 7 coins placed on the board
     if (coinsPlaced < 7) {
-        return -1;
+        return false;
     } else {
         possibleColumnWin = false;
         possibleRowWin = false;
@@ -81,17 +81,27 @@ function checkWinningConditions($column, $slots, columnIndex, rowIndex) {
         //4) check for DIAGONAL CONDITION
         //.......
     }
-    console.log(
-        "column",
-        possibleColumnWin,
-        "row",
-        possibleRowWin,
-        "diagonal",
-        possibleDiagonalWin
-    );
+
     return possibleColumnWin || possibleRowWin || possibleDiagonalWin;
 }
-function checkVictory($positions) {}
+//checkVictory
+//parameter:
+//return:
+function checkVictory($positions) {
+    var $winningSlots = $();
+    for (var i = $positions.length - 1; i >= 0; i--) {
+        console.log("checkVictory", i, $positions.eq(i));
+        if ($positions.eq(i).hasClass(currentPlayer.id)) {
+            $winningSlots = $winningSlots.add($positions.eq(i));
+        }
+        console.log("$winningSlots", $winningSlots);
+        if ($winningSlots.length > 3) {
+            console.log(currentPlayer.id, "WIN!");
+            return $winningSlots;
+        }
+    }
+    return -1;
+}
 
 function Player(id, name, color) {
     this.id = id;
@@ -115,29 +125,29 @@ $columns.on("click", function () {
         //1) column: pos 2 & pos3 in that column have to be occupied by same player
         //2) row: pos 3 in that row has to be occupied
         //3)diagonal: ??
-        var isWinningCondition = checkWinningConditions(
+        var isWinningCondition = checkVictoryPreConditions(
             $clickedColumn,
             $slots,
             columnIndex,
             coinSlot
         );
-        console.log("isWinningCondition", isWinningCondition);
+        // console.log("isWinningCondition", isWinningCondition);
         //checkVictory for column
         if (possibleColumnWin) {
-            checkVictory($clickedColumn);
-            console.log(currentPlayer.id, "Column Win!");
+            console.log("column win possible?", possibleColumnWin);
+            checkVictory($slots);
         }
 
         //checkVictory for row
         if (possibleRowWin) {
-            checkVictory();
-            console.log(currentPlayer.id, "Row Win!");
+            console.log("row win possible?", possibleRowWin);
+            checkVictory($slots);
         }
 
         //checkVictory for diagonal
         if (possibleDiagonalWin) {
+            console.log("diagonal win possible?", possibleDiagonalWin);
             checkVictory();
-            console.log(currentPlayer.id, "Diagonal Win!");
         }
         nextPlayer();
     }
