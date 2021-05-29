@@ -13,6 +13,7 @@ var coinsPlaced = 0;
 var possibleColumnWin;
 var possibleRowWin;
 var possibleDiagonalWin;
+var winner;
 
 var allDiagonals = [
     [2, 9, 16, 23],
@@ -32,8 +33,9 @@ var allDiagonals = [
 initNewGame();
 function initNewGame() {
     // $gameGrid.html(generateGrid());
-    yin = new Player("yin", "Christo", "palevioletred");
-    yang = new Player("yang", "Rubi", "cadetblue");
+    yin = new Player("yin", "Yin", "palevioletred");
+    yang = new Player("yang", "Yang", "cadetblue");
+    winner = null;
     currentPlayer = yin;
 }
 
@@ -67,7 +69,7 @@ function nextPlayer() {
 //checkVictoryPreConditions
 //parameter:
 //return:
-function checkVictoryPreConditions($column, $slots, columnIndex, rowIndex) {
+function checkVictoryPreConditions($slots, rowIndex) {
     //1) there must be at least 7 coins placed on the board
     if (coinsPlaced < 7) {
         return false;
@@ -117,8 +119,9 @@ function checkVictory($positions) {
         }
 
         if ($winningSlots.length > 3) {
-            console.log(currentPlayer.id, "WIN!");
-            console.log("$winningSlots", $winningSlots);
+            // console.log(currentPlayer.id, "WIN!");
+            console.log(i, "in checkVictory $winningSlots", $winningSlots);
+            winner = currentPlayer;
             return $winningSlots;
         }
     }
@@ -131,67 +134,96 @@ function Player(id, name, color) {
     this.color = color;
 }
 
+function isFull(index) {
+    return index < 0;
+}
+
+function getRow(index) {
+    var $slotsInRow = $();
+    for (var i = 0; i < $columns.length; i++) {
+        $slotsInRow = $slotsInRow.add($columns.eq(i).find(".slot").eq(index));
+    }
+    return $slotsInRow;
+}
+
+function getDiagonal(indexes) {
+    var $diagonal = $();
+    for (var i = 0; i < indexes.length; i++) {
+        $diagonal = $diagonal.add($allSlots.eq(indexes[i]));
+    }
+    return $diagonal;
+}
+
+function announceWinner(winner, $winningCombo) {
+    for (var i = 0; i < $winningCombo.length; i++) {
+        $winningCombo.eq(i).addClass("winningCombo");
+    }
+    console.log($winningCombo);
+    console.log("The Winner is " + winner.name);
+}
+
+function resetGame() {
+    for (var element of $allSlots) {
+        console.log($(this));
+
+        $(element).removeClass("yin");
+        $(element).removeClass("yang");
+        $(element).removeClass("winningCombo");
+        initNewGame();
+    }
+}
 //COLUMNS CLICK EVENT LISTENER
 $columns.on("click", function () {
-    //get column that was clicked on
-    var $clickedColumn = $(this);
+    //pass column that was clicked on
+    columnClickHandler($(this));
+});
+
+//COLUMNS CLICK HANDLER
+function columnClickHandler($clickedColumn) {
     // get all slots in that column
     var $slotsInColumn = $clickedColumn.find(".slot");
     //get index of columns and rows
     var columnIndex = $columns.index($clickedColumn);
     var rowIndex = placeCoin($slotsInColumn);
+    var $winningSlots = [];
 
     //as long as a column is not completely occupied by coins
-    if (rowIndex >= 0) {
+    if (!isFull(rowIndex)) {
         //check for winning situation condition
         //1) column: pos 2 & pos3 in that column have to be occupied by same player
         //2) row: pos 3 in that row has to be occupied
-        //3)diagonal: ??
-        var isWinningCondition = checkVictoryPreConditions(
-            $clickedColumn,
-            $slotsInColumn,
-            columnIndex,
-            rowIndex
-        );
-        // console.log("isWinningCondition", isWinningCondition);
+        //3)diagonal: at least 10 coins placed
+        checkVictoryPreConditions($slotsInColumn, rowIndex);
+
         //checkVictory for column
         if (possibleColumnWin) {
-            console.log("column win possible?", possibleColumnWin);
-            checkVictory($slotsInColumn);
+            $winningSlots = checkVictory($slotsInColumn);
         }
 
         //checkVictory for row
         if (possibleRowWin) {
-            console.log("row win possible?", possibleRowWin);
-            var $slotsInRow = $();
-            for (var i = 0; i < $columns.length; i++) {
-                $slotsInRow = $slotsInRow.add(
-                    $columns.eq(i).find(".slot").eq(rowIndex)
-                );
-            }
-            // console.log("$slotsInRow", $slotsInRow);
-            checkVictory($slotsInRow);
+            var $slotsInRow = getRow(rowIndex);
+            $winningSlots = checkVictory($slotsInRow);
         }
 
         //checkVictory for diagonal
         if (possibleDiagonalWin) {
-            console.log("diagonal win possible?", possibleDiagonalWin);
-
-            allDiagonals.forEach(function (diagIndexes) {
-                var $diagonal = $();
-                // console.log("diagIndexes LENGTH", diagIndexes.length);
-                for (var i = 0; i < diagIndexes.length; i++) {
-                    $diagonal = $diagonal.add($allSlots.eq(diagIndexes[i]));
-
-                    // console.log("$allSlots.eq(i)", $allSlots.eq(i));
+            for (var diagIndexes of allDiagonals) {
+                // allDiagonals.forEach(function (diagIndexes) {
+                var $diagonal = getDiagonal(diagIndexes);
+                $winningSlots = checkVictory($diagonal);
+                if ($winningSlots.length > 3) {
+                    break;
                 }
-                // console.log("$diagonal", $diagonal);
-                checkVictory($diagonal);
-            });
-            // console.log("$diagonal", $diagonal);
+                // });
+            }
+        }
+        if (winner) {
+            announceWinner(winner, $winningSlots);
+            resetGame();
         }
         nextPlayer();
     }
-});
+}
 
 // })();

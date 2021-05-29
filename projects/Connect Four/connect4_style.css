@@ -20,16 +20,17 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    /* background-color: black; */
 }
 
 footer {
     width: 100vw;
-    position: absolute;
     margin-top: 25px;
     display: flex;
-    justify-content: space-between;
-    top: 50vh;
     z-index: -1;
+    justify-content: center;
+    position: relative;
+    top: auto;
 }
 h1 {
 }
@@ -42,13 +43,33 @@ h1 {
     margin: 10px;
     border: 1px solid black;
     border-radius: 50%;
+    background-color: white;
+}
+.slot.winningCombo {
+    border: 2px solid black !important;
+    border-bottom-left-radius: 0;
+    animation-name: spin;
+    animation-duration: 5000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    box-shadow: 5px 5px 5px;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .player {
     min-width: 100px;
-    height: 100px;
+    min-height: 100px;
     margin: 50px;
     border-radius: 50%;
+    overflow: visible;
+    box-shadow: none;
 }
 .red {
 }
@@ -56,9 +77,11 @@ h1 {
 }
 .yin {
     background-color: palevioletred;
+    box-shadow: palevioletred !important;
 }
 .yang {
     background-color: cadetblue;
+    box-shadow: cadetblue;
 }
 .yourTurn {
     transform: scale(1.5);
@@ -69,9 +92,13 @@ h1 {
 @media screen and (max-width: 640px) {
     header {
         height: auto;
+        /* background-color: cornflowerblue; */
     }
     footer {
         justify-content: center;
+        /* background-color: blanchedalmond; */
+        position: relative;
+        top: auto;
     }
 
     .slot {
@@ -81,7 +108,8 @@ h1 {
     }
     .player {
         min-width: 50px;
-        height: 50px;
+        min-height: 50px;
+        font-size: 0.7rem;
         margin: 10px;
         display: flex;
         position: relative;
