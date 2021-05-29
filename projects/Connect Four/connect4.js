@@ -33,8 +33,8 @@ var allDiagonals = [
 initNewGame();
 function initNewGame() {
     // $gameGrid.html(generateGrid());
-    yin = new Player("yin", "Yin", "palevioletred");
-    yang = new Player("yang", "Yang", "cadetblue");
+    yin = new Player("yin", "Yin", $playerYin, "palevioletred");
+    yang = new Player("yang", "Yang", $playerYang, "cadetblue");
     winner = null;
     currentPlayer = yin;
 }
@@ -56,14 +56,16 @@ function placeCoin($slots) {
 }
 
 function nextPlayer() {
-    $playerYang.toggleClass("yourTurn");
-    $playerYin.toggleClass("yourTurn");
     if (currentPlayer === yin) {
         currentPlayer = yang;
+        console.log(currentPlayer.$element);
+        $playerYin.removeClass("yourTurn");
     } else {
         currentPlayer = yin;
+        console.log(currentPlayer.$element);
+        $playerYang.removeClass("yourTurn");
     }
-    console.log("Current Player is " + currentPlayer.id);
+    currentPlayer.$element.addClass("yourTurn");
 }
 
 //checkVictoryPreConditions
@@ -120,7 +122,7 @@ function checkVictory($positions) {
 
         if ($winningSlots.length > 3) {
             // console.log(currentPlayer.id, "WIN!");
-            console.log(i, "in checkVictory $winningSlots", $winningSlots);
+            // console.log(i, "in checkVictory $winningSlots", $winningSlots);
             winner = currentPlayer;
             return $winningSlots;
         }
@@ -128,9 +130,10 @@ function checkVictory($positions) {
     return -1;
 }
 
-function Player(id, name, color) {
+function Player(id, name, $element, color) {
     this.id = id;
     this.name = name;
+    this.$element = $element;
     this.color = color;
 }
 
@@ -164,12 +167,10 @@ function announceWinner(winner, $winningCombo) {
 
 function resetGame() {
     for (var element of $allSlots) {
-        console.log($(this));
-
         $(element).removeClass("yin");
         $(element).removeClass("yang");
         $(element).removeClass("winningCombo");
-        initNewGame();
+        winner = null;
     }
 }
 //COLUMNS CLICK EVENT LISTENER
@@ -221,8 +222,9 @@ function columnClickHandler($clickedColumn) {
         if (winner) {
             announceWinner(winner, $winningSlots);
             resetGame();
+        } else {
+            nextPlayer();
         }
-        nextPlayer();
     }
 }
 
