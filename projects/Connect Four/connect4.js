@@ -170,8 +170,8 @@ function resetGame() {
         $(element).removeClass("yin");
         $(element).removeClass("yang");
         $(element).removeClass("winningCombo");
-        winner = null;
     }
+    winner = null;
 }
 //COLUMNS CLICK EVENT LISTENER
 $columns.on("click", function () {
