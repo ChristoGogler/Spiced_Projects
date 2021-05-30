@@ -14,6 +14,7 @@ var possibleColumnWin;
 var possibleRowWin;
 var possibleDiagonalWin;
 var winner;
+var $winningSlots;
 
 var allDiagonals = [
     [2, 9, 16, 23],
@@ -32,11 +33,16 @@ var allDiagonals = [
 
 initNewGame();
 function initNewGame() {
-    // $gameGrid.html(generateGrid());
-    yin = new Player("yin", "Yin", $playerYin, "palevioletred");
-    yang = new Player("yang", "Yang", $playerYang, "cadetblue");
-    winner = null;
-    currentPlayer = yin;
+    //create Player objects
+    yin = new Player("yin", "Sandy", $playerYin, "palevioletred", "yinCoin");
+    yang = new Player("yang", "Patrick", $playerYang, "cadetblue", "yangCoin");
+    //display names
+    $playerYin.find(".name").html(yin.name);
+    $playerYang.find(".name").html(yang.name);
+    //find random start player
+    var random = Math.round(Math.random());
+    random === 1 ? (currentPlayer = yin) : (currentPlayer = yang);
+    nextPlayer();
 }
 
 function placeCoin($slots) {
@@ -44,10 +50,10 @@ function placeCoin($slots) {
     //check for first free slot
     for (var i = $slots.length - 1; i >= 0; i--) {
         var isTaken =
-            $slots.eq(i).hasClass(yin.id) || $slots.eq(i).hasClass(yang.id);
+            $slots.eq(i).hasClass(yin.coin) || $slots.eq(i).hasClass(yang.coin);
         //if its not taken add class currentPlayer.id
         if (!isTaken) {
-            $slots.eq(i).addClass(currentPlayer.id);
+            $slots.eq(i).addClass(currentPlayer.coin);
             coinsPlaced++;
             return i;
         }
@@ -58,11 +64,11 @@ function placeCoin($slots) {
 function nextPlayer() {
     if (currentPlayer === yin) {
         currentPlayer = yang;
-        console.log(currentPlayer.$element);
+        // console.log(currentPlayer.$element);
         $playerYin.removeClass("yourTurn");
     } else {
         currentPlayer = yin;
-        console.log(currentPlayer.$element);
+        // console.log(currentPlayer.$element);
         $playerYang.removeClass("yourTurn");
     }
     currentPlayer.$element.addClass("yourTurn");
@@ -82,8 +88,8 @@ function checkVictoryPreConditions($slots, rowIndex) {
         //2) check for COLUMN CONDITION
         //pos2 & pos3 in that column have to be occupied by currentPlayer
         if (
-            $slots.eq(2).hasClass(currentPlayer.id) &&
-            $slots.eq(3).hasClass(currentPlayer.id)
+            $slots.eq(2).hasClass(currentPlayer.coin) &&
+            $slots.eq(3).hasClass(currentPlayer.coin)
         ) {
             possibleColumnWin = true;
         }
@@ -92,7 +98,11 @@ function checkVictoryPreConditions($slots, rowIndex) {
         // pos 3 in that row has to be occupied by currentPlayer
 
         if (
-            $columns.eq(3).find(".slot").eq(rowIndex).hasClass(currentPlayer.id)
+            $columns
+                .eq(3)
+                .find(".slot")
+                .eq(rowIndex)
+                .hasClass(currentPlayer.coin)
         ) {
             possibleRowWin = true;
         }
@@ -111,30 +121,40 @@ function checkVictoryPreConditions($slots, rowIndex) {
 //parameter:
 //return:
 function checkVictory($positions) {
-    var $winningSlots = $();
-    // console.log("Length", $positions.length);
+    $winningSlots = $();
+    var count = 0;
     for (var i = 0; i < $positions.length; i++) {
-        if ($positions.eq(i).hasClass(currentPlayer.id)) {
+        // console.log("Iteration", i);
+        if ($positions.eq(i).hasClass(currentPlayer.coin)) {
             $winningSlots = $winningSlots.add($positions.eq(i));
+            count++;
+            console.log(
+                "Add slot to winningCombo",
+                i,
+                "length",
+                $winningSlots.length
+            );
+            if (count == 4) {
+                // console.log(currentPlayer.id, "WIN!");
+                // console.log(i, "in checkVictory $winningSlots", $winningSlots);
+                winner = currentPlayer;
+                announceWinner($winningSlots, winner);
+            }
         } else {
+            count = 0;
             $winningSlots = $();
-        }
-
-        if ($winningSlots.length > 3) {
-            // console.log(currentPlayer.id, "WIN!");
-            // console.log(i, "in checkVictory $winningSlots", $winningSlots);
-            winner = currentPlayer;
-            return $winningSlots;
+            console.log("reset winningcombo", $winningSlots);
         }
     }
-    return -1;
 }
 
-function Player(id, name, $element, color) {
+function Player(id, name, $element, color, coin) {
     this.id = id;
     this.name = name;
     this.$element = $element;
     this.color = color;
+    this.coin = coin;
+    this.wins = 0;
 }
 
 function isFull(index) {
@@ -157,22 +177,36 @@ function getDiagonal(indexes) {
     return $diagonal;
 }
 
-function announceWinner(winner, $winningCombo) {
-    for (var i = 0; i < $winningCombo.length; i++) {
-        $winningCombo.eq(i).addClass("winningCombo");
+function announceWinner($winningSlots, winner) {
+    for (var i = 0; i < $winningSlots.length; i++) {
+        $winningSlots.eq(i).addClass("winningCombo");
     }
-    console.log($winningCombo);
-    console.log("The Winner is " + winner.name);
+    winner.$element.find(".name").html("Winner");
+    winner.wins++;
+    winner.$element.find(".wins").html("won " + winner.wins);
+    //show message
+    var $message = $(".message");
+    $message.find("div").html(winner.name + " has won!");
+    $message.css("background-color", winner.color).css("display", "flex");
+
+    //show resetButton
 }
 
 function resetGame() {
     for (var element of $allSlots) {
-        $(element).removeClass("yin");
-        $(element).removeClass("yang");
+        $(element).removeClass(yin.coin);
+        $(element).removeClass(yang.coin);
         $(element).removeClass("winningCombo");
     }
+    winner.$element.find(".name").html(winner.name);
     winner = null;
+    $(".message").css("display", "none");
 }
+//RESETBUTTON CLICK EVENT LISTENER
+$(".resetButton").on("click", function () {
+    resetGame();
+});
+
 //COLUMNS CLICK EVENT LISTENER
 $columns.on("click", function () {
     //pass column that was clicked on
@@ -198,13 +232,13 @@ function columnClickHandler($clickedColumn) {
 
         //checkVictory for column
         if (possibleColumnWin) {
-            $winningSlots = checkVictory($slotsInColumn);
+            checkVictory($slotsInColumn);
         }
 
         //checkVictory for row
         if (possibleRowWin) {
             var $slotsInRow = getRow(rowIndex);
-            $winningSlots = checkVictory($slotsInRow);
+            checkVictory($slotsInRow);
         }
 
         //checkVictory for diagonal
@@ -212,17 +246,11 @@ function columnClickHandler($clickedColumn) {
             for (var diagIndexes of allDiagonals) {
                 // allDiagonals.forEach(function (diagIndexes) {
                 var $diagonal = getDiagonal(diagIndexes);
-                $winningSlots = checkVictory($diagonal);
-                if ($winningSlots.length > 3) {
-                    break;
-                }
+                checkVictory($diagonal);
                 // });
             }
         }
-        if (winner) {
-            announceWinner(winner, $winningSlots);
-            resetGame();
-        } else {
+        if (!winner) {
             nextPlayer();
         }
     }
