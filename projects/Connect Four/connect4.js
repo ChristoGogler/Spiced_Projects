@@ -262,7 +262,11 @@
 
     //TEXTFIELD INPUT HANDLER
     function textfieldInputHandler($textfield, player) {
-        player.name = $textfield.val();
+        if ($textfield.val() == "") {
+            player.name = $textfield.placeholder();
+        } else {
+            player.name = $textfield.val();
+        }
     }
     //RESETBUTTON CLICK EVENT LISTENER
     $(".resetButton").on("click", function () {
