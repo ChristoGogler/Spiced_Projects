@@ -4,6 +4,8 @@
     var textarea = document.querySelector("#textarea1");
     console.log("textarea", textarea);
 
+    textarea.value = localStorage.getItem("userInput");
+
     //TEXTAREA INPUT LISTENER
     //grab user input and pass to saveToLocalStorage
     textarea.addEventListener("input", saveToLocalStorage);
