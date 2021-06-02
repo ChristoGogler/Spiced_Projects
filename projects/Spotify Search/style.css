@@ -43,6 +43,12 @@ ol {
     width: 100vw;
     margin: 0 100px;
 }
+
+ol li img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
 #searchResultsheadline {
 }
 #searchResults {
