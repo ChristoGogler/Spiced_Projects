@@ -7,19 +7,22 @@
     var $resultsHeadline = $("#searchResultsheadline");
     var $listOfResults = $("#searchResults");
     var $moreButton = $("#moreButton");
-    // var results;
+    // var gResults;
+    var userinput;
+    var searchType;
+    var offset = 0;
 
     const URL = "https://spicedify.herokuapp.com/spotify";
 
-    console.log(
-        "cache: ",
-        $input,
-        $type,
-        $submitButton,
-        $resultsHeadline,
-        $listOfResults,
-        $moreButton
-    );
+    // console.log(
+    //     "cache: ",
+    //     $input,
+    //     $type,
+    //     $submitButton,
+    //     $resultsHeadline,
+    //     $listOfResults,
+    //     $moreButton
+    // );
 
     // SELECTION KEYDOWN EVENT LISTENER - when user presses ENTER
     $type.keypress(function (event) {
@@ -40,9 +43,10 @@
     $submitButton.on("click", function () {
         console.log("Search CLICK");
         $resultsHeadline.html("Results for " + $input.val());
+        offset = 0;
         $listOfResults.empty();
-        var userinput = $input.val();
-        var searchType = $type.val();
+        userinput = $input.val();
+        searchType = $type.val();
 
         performRequest(userinput, searchType);
     });
@@ -50,13 +54,15 @@
     //MORE BUTTON LISTENER
     $moreButton.on("click", function () {
         console.log("More CLICK");
+        offset += 20;
+        performRequest(userinput, searchType, offset);
     });
 
     //performRequest
     // 2 parameters: 1) userInput - what the user is searching for, 2) searchtype - album or artist
     //create ajax request
     //no return
-    function performRequest(userinput, searchType) {
+    function performRequest(userinput, searchType, offset) {
         //console.log("userinput before", userinput);
         //var encodedUserinput = encodeURIComponent(userinput);
         //console.log("userinput after", userinput);
@@ -65,8 +71,10 @@
             data: {
                 q: userinput,
                 type: searchType,
+                offset: offset,
             },
             success: function (results) {
+                // gResults = results;
                 var extract = extractItems(results);
                 prepareResults(extract);
             },
@@ -138,7 +146,7 @@
             }
             element += "<a href='" + links[index] + "'>" + title + "</a>";
             element += "</li>";
-            console.log(element);
+            // console.log(element);
             $listOfResults.append(element);
         });
     }
