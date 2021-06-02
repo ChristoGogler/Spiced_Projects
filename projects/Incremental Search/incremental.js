@@ -5,11 +5,21 @@
     var $inputField = $(".textInput");
     var $suggestionsContainer = $(".suggestions");
     var suggestions;
+    var timer;
+    var THROTTLE_INTERVAL = 100;
 
     // 1/6) INPUT EVENT LISTENER - when textfield input changes
     $inputField.on("input", function () {
         // textfieldInputHandler($(this));
-        textfieldAjaxInputHandler($(this));
+        var $textfield = $(this);
+
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+            console.log("throttle");
+            textfieldAjaxInputHandler($textfield);
+        }, THROTTLE_INTERVAL);
     });
 
     // 2/6) MOUSEOVER/ENTER EVENT LISTENER - when mouse over the individual suggestions
@@ -100,31 +110,39 @@
     }
 
     //TEXTFIELD AJAX INPUT HANDLER
-    function textfieldAjaxInputHandler(element) {
+    function textfieldAjaxInputHandler($element) {
         resetSuggestions();
         var MIN_LENGTH = 1;
-        var ajaxInputVal = $(element).val();
+        var ajaxInputBefore = $element.val();
 
-        if (ajaxInputVal.length < MIN_LENGTH) {
+        if (ajaxInputBefore.length < MIN_LENGTH) {
             return;
         }
         $.ajax({
             url: "https://spicedworld.herokuapp.com/",
             data: {
-                q: ajaxInputVal,
+                q: ajaxInputBefore,
             },
             success: function (data) {
-                console.log("ajax - Incremental Search");
-                console.log("data:", data);
-                // do something with the data here
-                //add country to the suggestions array
-                data.forEach((country) => {
-                    suggestions.push(country);
-                });
-                console.log("ajax suggestions: ", suggestions);
-                showSuggestions();
+                //early return if the result is outdated
+                if ($element.val() !== ajaxInputBefore) {
+                    return;
+                }
+                addAjaxResponseSuggestions(data);
             },
         });
+    }
+    //function addAjaxResponseSuggestions
+    //1 parameter: 1) data - received from ajax request
+    //do: create a string of all suggestions within html elements or "not found! message
+    function addAjaxResponseSuggestions(data) {
+        // do something with the data here
+        //add country to the suggestions array
+        data.forEach((country) => {
+            suggestions.push(country);
+        });
+        console.log("ajax suggestions: ", suggestions);
+        showSuggestions();
     }
 
     //function getHTMLString
@@ -183,17 +201,18 @@
                 break;
             }
         }
-        // //create htmlstring and make suggestions element visible
-        // $suggestionsContainer.html(getHTMLString());
-        // $suggestionsContainer.removeClass("hidden");
         showSuggestions();
     }
-
+    //function showSuggestions
+    //0 parameter
+    //do: create htmlstring and make suggestions element visible
+    //return: none
     function showSuggestions() {
         //create htmlstring and make suggestions element visible
         $suggestionsContainer.html(getHTMLString());
         $suggestionsContainer.removeClass("hidden");
     }
+
     //function resetSuggestions
     //0 parameter
     //do: reset suggestions array and html of suggestions container; hide the suggestions container
