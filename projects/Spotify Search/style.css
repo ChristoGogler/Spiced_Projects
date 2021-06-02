@@ -39,6 +39,10 @@ main {
     flex: 1;
     background-color: coral;
 }
+ol {
+    width: 100vw;
+    margin: 0 100px;
+}
 #searchResultsheadline {
 }
 #searchResults {
