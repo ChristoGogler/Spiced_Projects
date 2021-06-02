@@ -8,7 +8,8 @@
 
     // 1/6) INPUT EVENT LISTENER - when textfield input changes
     $inputField.on("input", function () {
-        textfieldInputHandler($(this));
+        // textfieldInputHandler($(this));
+        textfieldAjaxInputHandler($(this));
     });
 
     // 2/6) MOUSEOVER/ENTER EVENT LISTENER - when mouse over the individual suggestions
@@ -95,7 +96,35 @@
     //TEXTFIELD INPUT HANDLER
     function textfieldInputHandler(element) {
         var $value = $(element).val();
-        getAndShowSuggestions($value);
+        getSuggestions($value);
+    }
+
+    //TEXTFIELD AJAX INPUT HANDLER
+    function textfieldAjaxInputHandler(element) {
+        resetSuggestions();
+        var MIN_LENGTH = 1;
+        var ajaxInputVal = $(element).val();
+
+        if (ajaxInputVal.length < MIN_LENGTH) {
+            return;
+        }
+        $.ajax({
+            url: "https://spicedworld.herokuapp.com/",
+            data: {
+                q: ajaxInputVal,
+            },
+            success: function (data) {
+                console.log("ajax - Incremental Search");
+                console.log("data:", data);
+                // do something with the data here
+                //add country to the suggestions array
+                data.forEach((country) => {
+                    suggestions.push(country);
+                });
+                console.log("ajax suggestions: ", suggestions);
+                showSuggestions();
+            },
+        });
     }
 
     //function getHTMLString
@@ -125,7 +154,7 @@
     //1 parameter: inputValue - the value the user has typed into the textfield
     //do: get all the matching suggestions and make them visible
     //return: early return if value is empty
-    function getAndShowSuggestions(inputValue) {
+    function getSuggestions(inputValue) {
         suggestions = [];
         //if value is empty, empty suggestions & hide suggestionsContainer
         if (inputValue == "") {
@@ -154,11 +183,17 @@
                 break;
             }
         }
+        // //create htmlstring and make suggestions element visible
+        // $suggestionsContainer.html(getHTMLString());
+        // $suggestionsContainer.removeClass("hidden");
+        showSuggestions();
+    }
+
+    function showSuggestions() {
         //create htmlstring and make suggestions element visible
         $suggestionsContainer.html(getHTMLString());
         $suggestionsContainer.removeClass("hidden");
     }
-
     //function resetSuggestions
     //0 parameter
     //do: reset suggestions array and html of suggestions container; hide the suggestions container
