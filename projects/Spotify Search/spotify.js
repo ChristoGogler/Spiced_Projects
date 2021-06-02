@@ -7,6 +7,7 @@
     var $resultsHeadline = $("searchResultsheadline");
     var $listOfResults = $("#searchResults");
     var $moreButton = $("#moreButton");
+    var $results;
 
     const URL = "https://spicedify.herokuapp.com/spotify";
 
@@ -19,6 +20,14 @@
         $listOfResults,
         $moreButton
     );
+
+    // KEYDOWN EVENT LISTENER - when user presses arrow up/down or return
+    $input.keypress(function (event) {
+        if (event.code == "Enter") {
+            console.log("EVENT", event.code);
+            $submitButton.trigger("click");
+        }
+    });
 
     //SUBMIT BUTTON LISTENER
     $submitButton.on("click", function () {
@@ -39,6 +48,7 @@
     //create ajax request
     //no return
     function performRequest(userinput, searchType) {
+        $results = null;
         $.ajax({
             url: URL,
             data: {
@@ -46,7 +56,8 @@
                 type: searchType,
             },
             success: function (results) {
-                renderResults(results);
+                var $results = results;
+                renderResults($results);
             },
         });
     }
@@ -55,5 +66,19 @@
     // 1 parameters: 1) results - what the server returns as a result
     //make things appear in the results list
     //no return
-    function renderResults(results) {}
+    function renderResults($results) {
+        console.log("rederResults", $results);
+        //make distinction between artist and album
+        if ($results.artists) {
+            //for artists:
+            //get all artists, images and link
+            var artist = $results.artists.items[0].name;
+            console.log("artist:", artist);
+        } else {
+            //for album:
+            //get all albums, images and link
+            var album = $results.albums.items[0].name;
+            console.log("album:", album);
+        }
+    }
 })();
