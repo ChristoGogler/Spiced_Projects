@@ -4,7 +4,7 @@
     var $input = $("#searchField");
     var $type = $("#searchType");
     var $submitButton = $("#submitButton");
-    var $resultsHeadline = $("searchResultsheadline");
+    var $resultsHeadline = $("#searchResultsheadline");
     var $listOfResults = $("#searchResults");
     var $moreButton = $("#moreButton");
     // var results;
@@ -39,6 +39,8 @@
     //SUBMIT BUTTON LISTENER
     $submitButton.on("click", function () {
         console.log("Search CLICK");
+        $resultsHeadline.html("Results for " + $input.val());
+        $listOfResults.empty();
         var userinput = $input.val();
         var searchType = $type.val();
 

@@ -1,6 +1,7 @@
 body {
     margin: 0;
-
+    font-size: 18pt;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -18,6 +19,12 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+h1 {
+    font-size: 2rem;
+}
+h2 {
+    font-size: 1.5rem;
 }
 #searchField {
     padding: 10px 20px;
@@ -37,16 +44,27 @@ main {
     justify-content: center;
     flex-direction: column;
     flex: 1;
-    background-color: coral;
+    /* background-color: coral; */
 }
-ol {
+ul {
     width: 100vw;
     margin: 0 100px;
+    list-style-type: none;
+}
+ul li {
+    display: flex;
+    margin: 10px;
+}
+ul li a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    padding: 50px;
+    color: black;
 }
 
-ol li img {
-    width: 300px;
-    height: 300px;
+ul li img {
+    width: 200px;
+    height: 200px;
     object-fit: cover;
 }
 #searchResultsheadline {
