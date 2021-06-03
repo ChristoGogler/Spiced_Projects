@@ -12,7 +12,6 @@
     var searchType;
     var total;
     var next;
-    var offset = 0;
 
     const URL = "https://spicedify.herokuapp.com/spotify";
 
@@ -34,7 +33,7 @@
         console.log("Search CLICK");
         $moreButton.addClass("hidden");
         $resultsHeadline.html("Results for " + $input.val());
-        offset = 0;
+
         $listOfResults.empty();
         userinput = $input.val();
         searchType = $type.val();
@@ -57,9 +56,14 @@
         });
     });
 
+    //replaceURLName
+    // 1 parameter: 1) spotifyURL - the url to the next results
+    //replace with API url
+    // return: replaced url
     function replaceURLName(spotifyURL) {
         return spotifyURL.replace("https://api.spotify.com/v1/search", URL);
     }
+
     //performRequest
     // 2 parameters: 1) userInput - what the user is searching for, 2) searchtype - album or artist
     //create ajax request
@@ -80,6 +84,10 @@
         });
     }
 
+    //extractItems
+    // 1 parameter: 1) results - the data received from the server
+    //extract the items
+    //return items
     function extractItems(results) {
         if (results.artists) {
             total = results.artists.total;
@@ -97,7 +105,7 @@
 
     //prepareResults
     // 1 parameters: 1) results - what the server returns as a result
-    //make things appear in the results list
+    //seperate the results into arrays - artist, links, img, albums
     //no return
     function prepareResults(results) {
         // //make distinction between artist and album
