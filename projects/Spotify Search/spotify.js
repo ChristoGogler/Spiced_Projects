@@ -8,12 +8,15 @@
     var $listOfResults = $("#searchResults");
     var $moreButton = $("#moreButton");
 
+    var isInfiniteScroll = location.search.includes("scroll=infinite");
     var userinput;
     var searchType;
     var total;
     var next;
 
     const URL = "https://spicedify.herokuapp.com/spotify";
+
+    console.log("isInfiniteScroll", isInfiniteScroll);
 
     // SELECTION KEYDOWN EVENT LISTENER - when user presses ENTER
     $type.keypress(function (event) {
@@ -56,6 +59,40 @@
         });
     });
 
+    //loadInfiniteScrollResults
+    // 1 parameter: 1) spotifyURL - the url to the next results
+    // do: replace with API url
+    // return: replaced url
+    function loadInfiniteScrollResults() {
+        if (next == null) {
+            //no more results
+            return;
+        }
+        if (hasScrolledCloseToBottom()) {
+            // get more results
+            $moreButton.trigger("click");
+        } else {
+            // console.log("check again");
+            setTimeout(loadInfiniteScrollResults, 500);
+        }
+    }
+
+    //hasScrolledCloseToBottom
+    //parameter: 0
+    //do: check the scrolling position of the page
+    //return:  boolean
+    function hasScrolledCloseToBottom() {
+        var pageHeight = $(document).height();
+        var windowHeight = $(window).height();
+        var scrollTop = $(document).scrollTop();
+        var offset = 200;
+
+        if (pageHeight - windowHeight - scrollTop < offset) {
+            return true;
+        }
+        return false;
+    }
+
     //replaceURLName
     // 1 parameter: 1) spotifyURL - the url to the next results
     //replace with API url
@@ -94,12 +131,12 @@
             next = results.artists.next;
             // $resultsHeadline.html(" 0 results for " + $input.val());
 
-            console.log("results total", total);
+            // console.log("results total", total);
             return results.artists.items;
         }
         total = results.albums.total;
         next = results.albums.next;
-        console.log("results", total);
+        // console.log("results", total);
         return results.albums.items;
     }
 
@@ -152,12 +189,15 @@
             // console.log(element);
             $listOfResults.append(element);
         });
-
-        if (next != null) {
-            console.log(next);
-            $moreButton.removeClass("hidden");
+        //make distinction between More Button and Infinite Scroll
+        if (isInfiniteScroll) {
+            loadInfiniteScrollResults();
         } else {
-            $moreButton.addClass("hidden");
+            if (next != null) {
+                $moreButton.removeClass("hidden");
+            } else {
+                $moreButton.addClass("hidden");
+            }
         }
     }
 })();
