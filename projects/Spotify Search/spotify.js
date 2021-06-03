@@ -13,6 +13,7 @@
     var searchType;
     var total;
     var next;
+    var SCROLLING_OFFSET = 200;
 
     const URL = "https://spicedify.herokuapp.com/spotify";
 
@@ -79,15 +80,14 @@
 
     //hasScrolledCloseToBottom
     //parameter: 0
-    //do: check the scrolling position of the page
+    //do: check if the scrolling position of the page is smaller than offset
     //return:  boolean
     function hasScrolledCloseToBottom() {
         var pageHeight = $(document).height();
         var windowHeight = $(window).height();
         var scrollTop = $(document).scrollTop();
-        var offset = 200;
 
-        if (pageHeight - windowHeight - scrollTop < offset) {
+        if (pageHeight - windowHeight - scrollTop < SCROLLING_OFFSET) {
             return true;
         }
         return false;
