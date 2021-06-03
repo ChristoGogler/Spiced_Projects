@@ -7,34 +7,24 @@
     var $resultsHeadline = $("#searchResultsheadline");
     var $listOfResults = $("#searchResults");
     var $moreButton = $("#moreButton");
-    // var gResults;
+
     var userinput;
     var searchType;
+    var total;
+    var next;
     var offset = 0;
 
     const URL = "https://spicedify.herokuapp.com/spotify";
 
-    // console.log(
-    //     "cache: ",
-    //     $input,
-    //     $type,
-    //     $submitButton,
-    //     $resultsHeadline,
-    //     $listOfResults,
-    //     $moreButton
-    // );
-
     // SELECTION KEYDOWN EVENT LISTENER - when user presses ENTER
     $type.keypress(function (event) {
         if (event.code == "Enter") {
-            // console.log("EVENT", event.code);
             $submitButton.trigger("click");
         }
     });
     // SEARCHFIELD KEYDOWN EVENT LISTENER - when user presses ENTER
     $input.keypress(function (event) {
         if (event.code == "Enter") {
-            // console.log("EVENT", event.code);
             $submitButton.trigger("click");
         }
     });
@@ -42,6 +32,7 @@
     //SUBMIT BUTTON LISTENER
     $submitButton.on("click", function () {
         console.log("Search CLICK");
+        $moreButton.addClass("hidden");
         $resultsHeadline.html("Results for " + $input.val());
         offset = 0;
         $listOfResults.empty();
@@ -53,38 +44,54 @@
 
     //MORE BUTTON LISTENER
     $moreButton.on("click", function () {
-        console.log("More CLICK");
-        offset += 20;
-        performRequest(userinput, searchType, offset);
+        console.log("MORE CLICK");
+
+        var nextURL = replaceURLName(next);
+        $.ajax({
+            url: nextURL,
+            data: {},
+            success: function (results) {
+                var extract = extractItems(results);
+                prepareResults(extract);
+            },
+        });
     });
 
+    function replaceURLName(spotifyURL) {
+        return spotifyURL.replace("https://api.spotify.com/v1/search", URL);
+    }
     //performRequest
     // 2 parameters: 1) userInput - what the user is searching for, 2) searchtype - album or artist
     //create ajax request
     //no return
-    function performRequest(userinput, searchType, offset) {
-        //console.log("userinput before", userinput);
-        //var encodedUserinput = encodeURIComponent(userinput);
-        //console.log("userinput after", userinput);
+    function performRequest(userinput, searchType) {
         $.ajax({
             url: URL,
             data: {
                 q: userinput,
                 type: searchType,
-                offset: offset,
             },
             success: function (results) {
-                // gResults = results;
                 var extract = extractItems(results);
-                prepareResults(extract);
+                if (total > 0) {
+                    prepareResults(extract);
+                }
             },
         });
     }
 
     function extractItems(results) {
         if (results.artists) {
+            total = results.artists.total;
+            next = results.artists.next;
+            // $resultsHeadline.html(" 0 results for " + $input.val());
+
+            console.log("results total", total);
             return results.artists.items;
         }
+        total = results.albums.total;
+        next = results.albums.next;
+        console.log("results", total);
         return results.albums.items;
     }
 
@@ -93,9 +100,7 @@
     //make things appear in the results list
     //no return
     function prepareResults(results) {
-        // console.log("rederResults", results);
         // //make distinction between artist and album
-        // console.log("result type", results[0].type);
         var artists = [];
         var albums = [];
         var images = [];
@@ -108,25 +113,15 @@
                 images.push(artist.images[1]);
                 links.push(artist.external_urls.spotify);
             });
-            console.log(
-                "artists:",
-                artists,
-                "images:",
-                images,
-                "links:",
-                links
-            );
             showResults(artists, images, links);
         } else {
             //for album:
             //get all albums, images and link
-
             results.forEach(function (album) {
                 albums.push(album.name);
                 images.push(album.images[1]);
                 links.push(album.external_urls.spotify);
             });
-            // console.log("albums:", albums, "images:", images, "links:", links);
             showResults(albums, images, links);
         }
     }
@@ -149,5 +144,12 @@
             // console.log(element);
             $listOfResults.append(element);
         });
+
+        if (next != null) {
+            console.log(next);
+            $moreButton.removeClass("hidden");
+        } else {
+            $moreButton.addClass("hidden");
+        }
     }
 })();
