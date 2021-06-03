@@ -36,7 +36,6 @@
     $submitButton.on("click", function () {
         console.log("Search CLICK");
         $moreButton.addClass("hidden");
-        $resultsHeadline.html("Results for " + $input.val());
 
         $listOfResults.empty();
         userinput = $input.val();
@@ -115,7 +114,8 @@
             success: function (results) {
                 var extract = extractItems(results);
                 if (total > 0) {
-                    prepareResults(extract);
+                    showResultsHandlebars(extract);
+                    //prepareResults(extract);
                 }
             },
         });
@@ -128,6 +128,7 @@
     function extractItems(results) {
         if (results.artists) {
             total = results.artists.total;
+
             next = results.artists.next;
             // $resultsHeadline.html(" 0 results for " + $input.val());
 
@@ -136,7 +137,7 @@
         }
         total = results.albums.total;
         next = results.albums.next;
-        // console.log("results", total);
+        console.log("results total", total);
         return results.albums.items;
     }
 
@@ -145,6 +146,7 @@
     //seperate the results into arrays - artist, links, img, albums
     //no return
     function prepareResults(results) {
+        console.log("results", results);
         // //make distinction between artist and album
         var artists = [];
         var albums = [];
@@ -158,6 +160,7 @@
                 images.push(artist.images[1]);
                 links.push(artist.external_urls.spotify);
             });
+
             showResults(artists, images, links);
         } else {
             //for album:
@@ -167,8 +170,30 @@
                 images.push(album.images[1]);
                 links.push(album.external_urls.spotify);
             });
+
             showResults(albums, images, links);
         }
+    }
+    //showResultsHandlebars
+    // 3 parameters: 1) titles = artists/albums, 2) images, 3) links - urls
+    //make things appear in the results list
+    //no return
+    function showResultsHandlebars(musicResults) {
+        //get the template & compile
+        var templates = document.querySelectorAll(
+            'script[type="text/x-handlebars-template"]'
+        );
+        Array.prototype.slice.call(templates).forEach(function (script) {
+            Handlebars.templates[script.id] = Handlebars.compile(
+                script.innerHTML
+            );
+        });
+
+        //connect the template with the anchor in the HTML
+        // document.getElementById("searchResults").innerHTML += musicData;
+        $listOfResults.append(
+            Handlebars.templates.music({ results: musicResults })
+        );
     }
 
     //showResults
@@ -189,6 +214,8 @@
             // console.log(element);
             $listOfResults.append(element);
         });
+
+        $resultsHeadline.html(total + " results for '" + $input.val() + "'");
         //make distinction between More Button and Infinite Scroll
         if (isInfiniteScroll) {
             loadInfiniteScrollResults();

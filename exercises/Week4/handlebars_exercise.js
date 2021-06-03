@@ -1,11 +1,5 @@
 console.log("Handlebars_exercise.js");
-
-//get the html from the template & compile
-var authorsHTML = document.getElementById("authors").innerHTML;
-var authorsTemplate = Handlebars.compile(authorsHTML);
-
-//this is the data to populate the template with
-var authorsData = authorsTemplate({
+var a = {
     authors: [
         {
             name: "Kahlil Gibran",
@@ -44,7 +38,14 @@ var authorsData = authorsTemplate({
             photo: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Angelou_at_Clinton_inauguration.jpg",
         },
     ],
-});
+};
+//get the html from the template & compile
+var authorsHTML = document.getElementById("authors").innerHTML;
+var authorsTemplate = Handlebars.compile(authorsHTML);
+
+//this is the data to populate the template with
+var authorsData = authorsTemplate(a);
+console.log("DATA", authorsData);
 
 //connect the template with the anchor in the HTML
 document.getElementById("writers").innerHTML += authorsData;
