@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Handlebars experiments</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    </head>
+    <body>
+        <div id="catHouse"></div>
+        <div id="dogHouse"></div>
+
+        <!--THIS IS THE TEMPLATE-->
+        <script id="dogs" type="text/x-handlebars-template">
+            <div>
+                <p>Dog Owner's name: {{owner}}</p>
+
+                <ul>{{#each dogs}}
+                        <li>Dog name: {{name}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </script>
+
+        <script type="text/javascript">
+            //get the html from the template & compile
+            var dogHTML = document.getElementById("dogs").innerHTML;
+            var dogTemplate = Handlebars.compile(dogHTML);
+
+            //this is the data to populate the template with
+            var dogData = dogTemplate({
+                owner: "Jim Olsen",
+                dogs: [{ name: "Steffi" }, { name: "Oskar" }, { name: "Max" }],
+            });
+
+            //connect the template with the anchor in the HTML
+            document.getElementById("dogHouse").innerHTML += dogData;
+
+            //another cat example
+            //this is a template as well, but in the javascript section
+            var myCats =
+                "<p>I have a pet. His name is {{name}}. His favourite food is {{food}} and he loves {{likes}}.</p>";
+            var template = Handlebars.compile(myCats);
+            //this is the data
+            var data = template({
+                name: "Rubi",
+                food: "tuna",
+                likes: "flowers",
+            });
+            //connect data and html anchor
+            document.getElementById("catHouse").innerHTML += data;
+        </script>
+    </body>
+</html>
