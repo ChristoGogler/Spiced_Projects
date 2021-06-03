@@ -179,21 +179,32 @@
     //make things appear in the results list
     //no return
     function showResultsHandlebars(musicResults) {
+        console.log(musicResults);
         //get the template & compile
-        var templates = document.querySelectorAll(
+        var templateScripts = document.querySelectorAll(
             'script[type="text/x-handlebars-template"]'
         );
-        Array.prototype.slice.call(templates).forEach(function (script) {
-            Handlebars.templates[script.id] = Handlebars.compile(
-                script.innerHTML
-            );
+        console.log("templateScripts", templateScripts);
+        Array.prototype.slice.call(templateScripts).forEach(function (script) {
+            console.log(script.id);
+            console.log(templateScripts[script.id]);
+            templateScripts[script.id] = Handlebars.compile(script.innerHTML);
         });
 
         //connect the template with the anchor in the HTML
         // document.getElementById("searchResults").innerHTML += musicData;
-        $listOfResults.append(
-            Handlebars.templates.music({ results: musicResults })
-        );
+        $listOfResults.append(templateScripts.music({ results: musicResults }));
+        $resultsHeadline.html(total + " results for '" + $input.val() + "'");
+        //make distinction between More Button and Infinite Scroll
+        if (isInfiniteScroll) {
+            loadInfiniteScrollResults();
+        } else {
+            if (next != null) {
+                $moreButton.removeClass("hidden");
+            } else {
+                $moreButton.addClass("hidden");
+            }
+        }
     }
 
     //showResults
