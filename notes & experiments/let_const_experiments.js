@@ -51,6 +51,7 @@ console.log(rainCape);
 // let navItems = document.querySelectorAll(".nav-item");
 // let navMenus = document.querySelectorAll(".nav-menu");
 
+//let i will be created as a new,different variable in each iteration and only lives inside that iteration
 // for (let i = 0; i < navItems.length; i++) {
 //     navItems[i].addEventListener("click", function () {
 //         navMenus[i].classList.add("open");
