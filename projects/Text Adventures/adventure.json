@@ -1,0 +1,44 @@
+{
+    "q": "Hello Muffin, welcome to my Gingerbread House! You look tired. Are you hungry?",
+    "answers": {
+        "yes": {
+            "q": "Wonderful - would you like some sweet cake or do you prefer some delicious children...I mean chicken soup?",
+            "answers": {
+                "soup": {
+                    "q": "Eat, eat my darling! You will get strong and tender...sorry, slender! When you finish your soup, you should have dessert. Dont you think?",
+                    "answers": {
+                        "okay": "Eat some pudding to fill you up! Don't you look delicious darling!?",
+                        "yes please": "Eat this cheese wheel! I wont take no as an answer!",
+                        "you are very persuasive": "I know, darling, and you are very delicious!"
+                    }
+                },
+                "cake": {
+                    "q": "There you go! Blackforest cake! eat it all up! Can I get you anything else?",
+                    "answers": {
+                        "Im full!": {
+                            "q": "No way, you barely ate anything. Let me help you! Open up wide",
+                            "answers": {
+                                "I cant!": "Ill feed you! You will be a delicious little snack!",
+                                "I feel sick": "Let's fatten you up just a tiny bit more..."
+                            }
+                        },
+                        "More please!": {
+                            "q": "Good, good my sweetpea! I love little children like you ...especially for dinner! I mean as company of course! You want another dessert?",
+                            "answers": {
+                                "yes": "Wonderful - eat whatever you like. The whole house is make from cake! Eat eat eat!",
+                                "no": "I wont take no for an answer..."
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "no": {
+            "q": "Are you sure? My cakes are the best in the whole wide land! At least have a bite! ",
+            "answers": {
+                "okay": "Wonderful - I'll go and get you some from the kitchen. Why don't you take a seat in this comfortable cage...ehem..I mean couch!",
+                "no": "Oh you are such an ungrateful person! Get out of house!"
+            }
+        }
+    }
+}
