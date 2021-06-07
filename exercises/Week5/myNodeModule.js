@@ -37,10 +37,10 @@ function logProps(object) {
 
     //extract the paramaters from query
     const a = importedQuerystring.parse(query);
-    const { ...all } = a;
-    makeIterable(all);
-    for (const prop in all) {
-        console.log(`The Value for >${prop}< is >${all[prop]}<`);
+    const { ...props } = a;
+    makeIterable(props);
+    for (const prop in props) {
+        console.log(`The Value for >${prop}< is >${props[prop]}<`);
     }
 }
 
