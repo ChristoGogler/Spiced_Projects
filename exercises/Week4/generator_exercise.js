@@ -14,3 +14,20 @@ console.log("original", array);
 const reveredArray = reverse.next(array).value;
 console.log("reversed", reveredArray);
 console.log("still original", array);
+
+//-------------
+// console.log("generator function exercise BONUS");
+
+// const a = makeWeirdArray(10, 20, 30);
+
+// // function* makeWeirdArray(a,b,c){
+
+// // }
+
+// a[0]; // 10
+
+// a[1] // 20
+
+// a[2] // 30
+
+// [...a]; // [30, 20, 10];
