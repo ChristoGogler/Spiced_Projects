@@ -50,4 +50,5 @@ function mapSizes(currentFolder) {
 const o = mapSizes(root);
 // console.log(o);
 const JSONString = JSON.stringify(o, null, 4);
-console.log("JSONString: ", JSONString);
+fs.writeFileSync("myFile.json", JSONString);
+// console.log("JSONString: ", JSONString);
