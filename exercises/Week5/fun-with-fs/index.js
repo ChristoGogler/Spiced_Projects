@@ -1,39 +1,46 @@
 const fs = require("fs");
 const path = require("path");
-
+const root = __dirname;
 // logSizes
 // 1 parameter: 1) string - current path of folder
 //do: log all files/folders recursively
 function logSizes(currentFolder) {
-    console.log("PATH: ", currentFolder);
+    // console.log("PATH: ", currentFolder);
+    //console.log("ROOT", root);
 
     //read directory, withFileTypes: true created dirent object, throws error if cant be read
-    fs.readdir(currentFolder, { withFileTypes: true }, function (error, files) {
-        if (error) {
-            console.log("Oh ohh! ", error);
-        }
-        // console.log("Yay! ", files);
+    fs.readdir(
+        currentFolder,
+        { withFileTypes: true },
+        function (error, folder) {
+            if (error) {
+                console.log("Oh ohh! ", error);
+                return;
+            }
+            //loop over each file/folder in folders
+            for (const item in folder) {
+                const fullPath = getPath(currentFolder, folder[item].name);
 
-        //loop over each file in files
-        for (const file in files) {
-            // console.log("file", files[file]);
-            //decide if its a folder or file
-            if (files[file].isDirectory()) {
-                // log the folder
-                console.log("FOLDER: ", files[file]);
-                // console.log("FOLDER NAME: ", files[file].name);
-                const fullPath = getPath(currentFolder, files[file].name);
-
-                // console.log("FULL PATH: ", fullPath);
-                //call recursively
-                logSizes(fullPath);
-            } else {
-                // log the file
-                console.log("FILE: ", files[file]);
+                //decide if its a folder or file
+                //FOLDER
+                if (folder[item].isDirectory()) {
+                    //call recursively
+                    logSizes(fullPath);
+                    return;
+                }
+                //FILE
+                fs.stat(fullPath, (error, stats) => {
+                    if (error) {
+                        console.log("Oh ohh! ", error);
+                        return;
+                    }
+                    const { size } = stats;
+                    // log the file
+                    console.log(`${getPath(root, fullPath)} : ${size}`);
+                });
             }
         }
-        currentFolder;
-    });
+    );
 }
 
 function getPath(parent, child) {
