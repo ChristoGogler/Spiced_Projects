@@ -89,7 +89,7 @@
             if (error) {
                 console.log("ERROR -- failed to append data", error);
             }
-            console.log('The "data to append" was appended to file!');
+            console.log("Successfully appended!");
         });
     };
 })();

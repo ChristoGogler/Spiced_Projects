@@ -55,7 +55,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    border: 1px dotted green;
+    /* border: 1px dotted green; */
     margin: 0;
     padding: 0;
     z-index: 1;

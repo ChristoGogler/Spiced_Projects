@@ -68,7 +68,6 @@ console.log("Kitty.js Kitty Carousel");
     }
 
     //add eventlistener: TRANSITIONED
-    //when transitioned event happens
     carousel.addEventListener("transitionend", function (event) {
         //ignore if it not contains "exit" class
         if (!event.target.classList.contains("exit")) {
@@ -103,24 +102,27 @@ console.log("Kitty.js Kitty Carousel");
         //when clicked on pagination dot
         dot.addEventListener("click", function (event) {
             // console.log("click event", dotIndex, event);
+            event.stopImmediatePropagation();
             dotClickHandler(dot, dotIndex);
         });
         //add event listener: TOUCH
         //when touch on dot
         dot.addEventListener("touchstart", function (event) {
             //stop bubbling to carousel
-            event.stopPropagation();
+
             dotTouchHandler(dot, dotIndex);
         });
     });
 
     //DOT TOUCH HANDLER
     function dotTouchHandler(dot, dotIndex) {
+        console.log("dot touch");
         dotClickHandler(dot, dotIndex);
     }
 
     //TOUCHSTART EVENT HANDLER on carousel
     function carouselTouchstartEventHandler(event) {
+        event.stopPropagation();
         swipe.startX = event.touches[0].pageX;
     }
     //TOUCHMOVE EVENT HANDLER on carousel
@@ -134,7 +136,7 @@ console.log("Kitty.js Kitty Carousel");
         if (isAnimating) {
             return;
         }
-        //if swipe start point minus swipe endpoint is at least 200 register as a swipe
+        //if swipe start point minus swipe endpoint is at least SWIPEDISTANCE then register as a swipe
         if (swipe.startX - swipe.endX > SWIPEDISTANCE) {
             //stop the settimeout method
             clearTimeout(timeout);
@@ -145,10 +147,12 @@ console.log("Kitty.js Kitty Carousel");
     // DOT CLICK HANDLER
     function dotClickHandler(dot, dotIndex) {
         //if user clicks on current dot/slide, ignore
+        console.log(dotIndex, currentSlide);
         if (dotIndex == currentSlide) {
             return;
         }
         //if the slides are currently animating, ignore!
+        console.log(isAnimating);
         if (isAnimating) {
             return;
         }

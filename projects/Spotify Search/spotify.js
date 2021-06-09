@@ -13,11 +13,10 @@
     var searchType;
     var total;
     var next;
-    var SCROLLING_OFFSET = 200;
+    const SCROLLING_OFFSET = 200;
+    const PLACEHOLDER_IMG = "https://placekitten.com/300/300";
 
     const URL = "https://spicedify.herokuapp.com/spotify";
-
-    console.log("isInfiniteScroll", isInfiniteScroll);
 
     // SELECTION KEYDOWN EVENT LISTENER - when user presses ENTER
     $type.keypress(function (event) {
@@ -34,9 +33,7 @@
 
     //SUBMIT BUTTON LISTENER
     $submitButton.on("click", function () {
-        console.log("Search CLICK");
         $moreButton.addClass("hidden");
-
         $listOfResults.empty();
         userinput = $input.val();
         searchType = $type.val();
@@ -46,15 +43,15 @@
 
     //MORE BUTTON LISTENER
     $moreButton.on("click", function () {
-        console.log("MORE CLICK");
-
         var nextURL = replaceURLName(next);
         $.ajax({
             url: nextURL,
             data: {},
             success: function (results) {
                 var extract = extractItems(results);
+                //MAKE SWITCH TO HANDLEBARS HERE!
                 prepareResults(extract);
+                //showResultsHandlebars(extract);
             },
         });
     });
@@ -72,7 +69,6 @@
             // get more results
             $moreButton.trigger("click");
         } else {
-            // console.log("check again");
             setTimeout(loadInfiniteScrollResults, 500);
         }
     }
@@ -114,8 +110,9 @@
             success: function (results) {
                 var extract = extractItems(results);
                 if (total > 0) {
-                    showResultsHandlebars(extract);
-                    //prepareResults(extract);
+                    //MAKE SWITCH TO HANDLEBARS HERE!
+                    //showResultsHandlebars(extract);
+                    prepareResults(extract);
                 }
             },
         });
@@ -141,7 +138,7 @@
         return results.albums.items;
     }
 
-    //prepareResults
+    //prepareResults //old version //not used for Handlebars
     // 1 parameters: 1) results - what the server returns as a result
     //seperate the results into arrays - artist, links, img, albums
     //no return
@@ -184,10 +181,7 @@
         var templateScripts = document.querySelectorAll(
             'script[type="text/x-handlebars-template"]'
         );
-        console.log("templateScripts", templateScripts);
         Array.prototype.slice.call(templateScripts).forEach(function (script) {
-            console.log(script.id);
-            console.log(templateScripts[script.id]);
             templateScripts[script.id] = Handlebars.compile(script.innerHTML);
         });
 
@@ -214,15 +208,16 @@
     function showResults(titles, images, links) {
         titles.forEach(function (title, index) {
             var element = "<li>";
-            try {
-                element += "<img src='" + images[index].url + "'/>";
-            } catch (error) {
-                console.warn("No img available!");
-                element += "<img src='https://via.placeholder.com/300'/>";
+
+            if (images[index] == undefined) {
+                console.log("No img available!");
+                element += "<img src='" + PLACEHOLDER_IMG + "'/>";
+            } else {
+                element += `<img src='${images[index].url}'/>`;
+
+                element += `<a href='${links[index]}'>${title}</a>`;
+                element += "</li>";
             }
-            element += "<a href='" + links[index] + "'>" + title + "</a>";
-            element += "</li>";
-            // console.log(element);
             $listOfResults.append(element);
         });
 

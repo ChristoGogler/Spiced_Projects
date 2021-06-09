@@ -252,6 +252,33 @@
         $(".message").css("display", "none");
     }
 
+    //COLORPICKER
+    // $(document).ready(function () {
+    //     $("#demo").hide();
+    //     var f = $.farbtastic("#picker");
+    //     var p = $("#picker").css("opacity", 0.25);
+    //     var selected;
+    //     $(".player .marker")
+    //         .each(function () {
+    //             f.linkTo(this);
+    //             $(this).css("opacity", 0.75);
+    //         })
+    //         .focus(function () {
+    //             if (selected) {
+    //                 $(selected)
+    //                     .css("opacity", 0.75)
+    //                     .removeClass("colorwell-selected");
+    //             }
+    //             f.linkTo(this);
+    //             p.css("opacity", 1);
+    //             $((selected = this))
+    //                 .css("opacity", 1)
+    //                 .addClass("colorwell-selected");
+    //         });
+    // });
+    // // $playerYin.farbtastic();
+    // // $playerYang.farbtastic();
+
     //TEXTFIELD INPUT EVENT LISTENERS
     $playerYin.find(".Tname").on("input", function () {
         textfieldInputHandler($(this), yin);
