@@ -3,6 +3,8 @@
 
     //requirements
     const http = require("http");
+    const fs = require("fs");
+    const file = "requests.txt";
 
     const server = http.createServer();
 
@@ -14,6 +16,7 @@
             console.log("---- REQUEST INCOMING ----");
             console.log(`URL: ${url} ---- METHOD: ${method} ----`);
             console.log("HEADERS: ", headers);
+            const userAgent = headers["user-agent"];
 
             //create empty array to store incoming message chunks
             let body = [];
@@ -36,6 +39,7 @@
                     }
                     console.log(`STATUSCODE: ${response.statuscode}`);
                     response.end();
+                    logToFile(method, url, userAgent);
                 })
                 //handle request error
                 .on("error", (error) => {
@@ -73,5 +77,19 @@
         response.statuscode = 200;
         response.setHeader("Content-Type", "text/html");
         writeBody(response);
+    };
+
+    const logToFile = (method, url, userAgent) => {
+        //...
+        const now = new Date();
+        let myString = `
+        TIMESTAMP: ${now} \t METHOD: ${method} \t URL: ${url} \t USERAGENT: ${userAgent}`;
+
+        fs.appendFile(file, myString, (error) => {
+            if (error) {
+                console.log("ERROR -- failed to append data", error);
+            }
+            console.log('The "data to append" was appended to file!');
+        });
     };
 })();
