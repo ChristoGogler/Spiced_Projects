@@ -50,7 +50,7 @@
         }
     }
 
-    function getNextNode(node, input) {
+    function getNextNode(node) {
         const { ...qa } = node;
 
         return qa;
