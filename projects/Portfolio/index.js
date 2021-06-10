@@ -20,35 +20,33 @@
                 response.end();
             }
 
-            //normalise the path
-            //to do: make sure user cant get anything thats not in the project folder --> 404
-            // console.log(`BEFORE: ${myPath}`);
-            let myPath = path.normalize(`${__dirname}/projects${url}`);
-            // console.log(`AFTER: ${myPath}`);
+            let normalisedPath = path.normalize(`${__dirname}/projects${url}`);
+
             if (url == "/") {
                 response.end(portfolio.createTableOfContents());
             }
 
-            if (!myPath.startsWith(__dirname + "/projects")) {
+            if (!normalisedPath.startsWith(__dirname + "/projects")) {
                 console.log(chalk.blue("403 - FORBIDDEN"));
                 response.statusCode = 403;
                 return response.end();
             }
             // does this file exist? no --> 404 no such file
-            fs.stat(myPath, (error, stats) => {
+            fs.stat(normalisedPath, (error, stats) => {
                 if (error) {
-                    console.log(chalk.blue("404 - NOT FOUND*"));
+                    console.log(chalk.blue("404 - NOT FOUND"));
 
                     response.statusCode = 404;
                     response.end();
-                    return; //early return: no such file!
+                    return;
                 } else {
-                    //yes
-                    //isDirectory?
+                    //yes //isDirectory?
                     if (stats.isDirectory()) {
-                        //yes
-                        //ends in slash?
-                        if (myPath.charAt(myPath.length - 1) !== "/") {
+                        //yes //ends in slash?
+                        if (
+                            normalisedPath.charAt(normalisedPath.length - 1) !==
+                            "/"
+                        ) {
                             console.log(chalk.blue("302 - REDIRECT"));
                             //no --> 302 redirect to "/"
                             response.statusCode = 302;
@@ -60,33 +58,30 @@
                         //is there index.html? no --> 404
 
                         fs.stat(
-                            `${myPath}index.html`,
+                            `${normalisedPath}index.html`,
                             (anotherError, stats) => {
                                 if (anotherError) {
                                     console.log(chalk.blue("404 - NOT FOUND"));
-                                    console.log(
-                                        chalk.red(`${myPath}index.html`)
-                                    );
                                     response.statusCode = 404;
                                     response.end();
-                                    return; //early return: no such file!
+                                    return;
                                 }
                                 //yes --> serve index.html
                                 respondThroughPipedStream(
                                     fs,
-                                    `${myPath}index.html`,
+                                    `${normalisedPath}index.html`,
                                     response
                                 );
                             }
                         );
                     } else {
                         // no directory --> 200 serve file!
-                        response.statuscode = 200;
                         const fileExtension = path.extname(url);
-                        console.log(chalk.yellow("url", url));
+                        console.log("fileExt:", fileExtension);
                         setMyHeader(response, fileExtension);
+                        console.log(chalk.yellow("url", url));
                         console.log(chalk.blue("200 - OK"));
-                        respondThroughPipedStream(fs, myPath, response);
+                        respondThroughPipedStream(fs, normalisedPath, response);
                     }
                 }
             });
@@ -96,32 +91,19 @@
         );
 
     const setMyHeader = (response, fileExtension) => {
-        switch (fileExtension) {
-            case ".html":
-                response.setHeader("Content-Type", "text/html");
-                break;
-            case ".css":
-                response.setHeader("Content-Type", "text/css");
-                break;
-            case ".js":
-                response.setHeader("Content-Type", "text/javascript");
-                break;
-            case ".json":
-                response.setHeader("Content-Type", "application/json");
-                break;
-            case ".gif":
-                response.setHeader("Content-Type", "image/gif");
-                break;
-            case ".jpg":
-                response.setHeader("Content-Type", "image/jpeg");
-                break;
-            case ".png":
-                response.setHeader("Content-Type", "image/png");
-                break;
-            case ".svg":
-                response.setHeader("Content-Type", "image/svg+xml");
-                break;
-        }
+        const contentType = {
+            ".html": "text/html",
+            ".css": "text/css",
+            ".js": "text/jacascript",
+            ".json": "application/json",
+            ".gif": "image/gif",
+            ".jpeg": "image/jpeg",
+            ".jpg": "image/jpg",
+            ".png": "image/png",
+            ".svg": "image/svg+xml",
+            ".xml": "image/svg+xml",
+        };
+        response.setHeader(`Content-Type`, contentType[fileExtension]);
     };
 
     const respondThroughPipedStream = (fs, myPath, response) => {
