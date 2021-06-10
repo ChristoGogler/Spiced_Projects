@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+main {
+}
+
+.wrapper {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    margin: 20px;
+    overflow: hidden;
+    user-select: none;
+}
+.wrapper .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: thistle;
+    overflow: hidden;
+}
+
+.wrapper .image.after {
+    background-color: teal;
+}
+
+.wrapper .image.before {
+    background-color: wheat;
+    right: 50%;
+}
+
+.wrapper .image img {
+    width: 600px;
+}
+
+.wrapper .slider {
+    position: absolute;
+    min-width: 20px;
+    background-color: goldenrod;
+    height: 400px;
+    width: 0;
+    left: 50%;
+
+    z-index: 5;
+    /* border-radius: 40%; */
+}
