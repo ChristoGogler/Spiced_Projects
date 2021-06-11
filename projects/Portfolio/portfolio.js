@@ -3,7 +3,7 @@
     const fs = require("fs");
     const path = require("path");
 
-    function createTableOfContents() {
+    const createTableOfContents = () => {
         let htmlString;
 
         const folderContents = fs.readdirSync("./projects", {
@@ -22,9 +22,9 @@
         });
         htmlString += "</ul></body></html>";
         return htmlString;
-    }
+    };
 
-    createTableOfContents();
+    // createTableOfContents();
     //this is defining the package that will be exported
     const exporting = {
         createTableOfContents,

@@ -34,7 +34,10 @@
             // does this file exist? no --> 404 no such file
             fs.stat(normalisedPath, (error, stats) => {
                 if (error) {
-                    console.log(chalk.blue("404 - NOT FOUND"));
+                    console.log(
+                        chalk.blue(`404 - NOT FOUND!`),
+                        chalk.red(error)
+                    );
 
                     response.statusCode = 404;
                     response.end();
@@ -61,7 +64,10 @@
                             `${normalisedPath}index.html`,
                             (anotherError, stats) => {
                                 if (anotherError) {
-                                    console.log(chalk.blue("404 - NOT FOUND"));
+                                    console.log(
+                                        chalk.blue(`404 - NOT FOUND!`),
+                                        chalk.red(anotherError)
+                                    );
                                     response.statusCode = 404;
                                     response.end();
                                     return;
@@ -77,7 +83,6 @@
                     } else {
                         // no directory --> 200 serve file!
                         const fileExtension = path.extname(url);
-                        console.log("fileExt:", fileExtension);
                         setMyHeader(response, fileExtension);
                         console.log(chalk.yellow("url", url));
                         console.log(chalk.blue("200 - OK"));
