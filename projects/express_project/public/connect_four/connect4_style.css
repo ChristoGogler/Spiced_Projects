@@ -1,0 +1,195 @@
+* {
+    font-size: 24pt;
+    font-family: Helvetica, Verdana, Tahoma, "Trebuchet MS", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+nav {
+}
+
+header {
+    /* height: 150px; */
+    display: flex;
+    justify-content: center;
+}
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* background-color: black; */
+}
+
+section.message {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100vw;
+    height: 370px;
+    opacity: 90%;
+    box-shadow: 5px 5px 50px;
+    animation: fadeIn linear 2s;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    90% {
+        opacity: 0.95;
+    }
+}
+section button {
+    font-size: 0.7rem;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 15px;
+}
+section button:hover {
+    transform: translate(2px, 2px);
+    cursor: pointer;
+}
+
+footer {
+    width: 100vw;
+    margin-top: 25px;
+    display: flex;
+    /* z-index: -1; */
+    justify-content: center;
+    position: relative;
+    top: auto;
+}
+h1 {
+}
+.board {
+    display: flex;
+}
+.column:hover {
+}
+.column:hover .slot {
+    transition: box-shadow ease 0.2s;
+    box-shadow: 3px 3px 5px;
+}
+.slot {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: white;
+}
+.slot.winningCombo {
+    border: 2px solid black !important;
+    border-bottom-left-radius: 0;
+    animation-name: spin;
+    animation-duration: 5000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    box-shadow: 0px 0px 15px 2px;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px dotted black; */
+}
+/* .player .name {
+    margin-left: -80px;
+    position: absolute;
+    border: 1px dotted black;
+} */
+.player .Tname {
+    margin-left: 40px;
+    position: absolute;
+    border: none;
+    background: none;
+    z-index: 5;
+    width: 170px;
+}
+.player .Tname:hover {
+    /* border: 1px dotted black; */
+    cursor: text;
+}
+.player .Tname::placeholder {
+    color: black;
+}
+.player .wins {
+    position: absolute;
+    font-size: 0.5rem;
+    margin-top: 60px;
+}
+
+.marker {
+    min-width: 100px;
+    min-height: 100px;
+    margin: 50px;
+    border-radius: 50%;
+    overflow: visible;
+    transition: box-shadow ease 0.2s;
+    box-shadow: 3px 3px 5px;
+}
+.yinCoin {
+    background-color: palevioletred;
+}
+.yangCoin {
+    background-color: cadetblue;
+}
+
+.yourTurn {
+    transform: scale(1.5);
+    transition: transform 0.3s ease;
+}
+
+/* for small screens/smartphone */
+@media screen and (max-width: 640px) {
+    header {
+        height: auto;
+        /* background-color: cornflowerblue; */
+    }
+    footer {
+        justify-content: center;
+        /* background-color: blanchedalmond; */
+        position: relative;
+        top: auto;
+    }
+    section.message {
+        height: 208px;
+    }
+    .slot {
+        width: 30px;
+        height: 30px;
+        margin: 4px;
+    }
+    .player {
+    }
+    .player .name {
+        margin-left: -40px;
+        font-size: 0.5rem;
+    }
+    .player .wins {
+        font-size: 0.3rem;
+        margin-top: 30px;
+    }
+
+    .marker {
+        min-width: 50px;
+        min-height: 50px;
+        margin: 50px;
+        border-radius: 50%;
+        overflow: visible;
+    }
+}
