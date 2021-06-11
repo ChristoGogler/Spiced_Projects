@@ -1,7 +1,7 @@
 console.log("AJAX TICKER", $);
 
 (function () {
-    $.get("/headlines.json", function (response) {
+    $.get("./headlines.json", function (response) {
         addLinks(response);
         initTicker();
     });

@@ -11,6 +11,11 @@
     server
         .on("request", (request, response) => {
             console.log("---- REQUEST INCOMING ----");
+            console.log(
+                chalk.yellow(
+                    `.... Processor ${process.pid} in handling the request ....`
+                )
+            );
             const { method, url } = request;
 
             if (method != "GET") {
@@ -82,6 +87,7 @@
                         );
                     } else {
                         // no directory --> 200 serve file!
+                        //get the file extension and set the header accordingly
                         const fileExtension = path.extname(url);
                         setMyHeader(response, fileExtension);
                         console.log(chalk.yellow("url", url));
@@ -95,6 +101,8 @@
             console.log("---- PORTFOLIO SERVER .... listening .... ----")
         );
 
+    //setMyHeader
+    //2 parameter: 1) response, 2) fileExtension of the requested file
     const setMyHeader = (response, fileExtension) => {
         const contentType = {
             ".html": "text/html",
@@ -111,16 +119,18 @@
         response.setHeader(`Content-Type`, contentType[fileExtension]);
     };
 
+    //respondThroughPipedStream
+    //3 parameters: 1) fs (filesystem), 2) myPath - normalised path, 3) response
+    //do: create read stream and connect
     const respondThroughPipedStream = (fs, myPath, response) => {
         const readStream = fs.createReadStream(myPath);
         try {
             readStream.pipe(response);
         } catch (error) {
-            //404 - file does not exist
-            console.log(`ERROR 404 - No such file! : ${error}`);
+            console.log(`ERROR piping readStream & response : ${error}`);
             response.statusCode = 404;
-            // response.end();
-            return; //early return: no such file!
+            response.end();
+            return;
         }
     };
 })();
