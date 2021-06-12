@@ -2,10 +2,17 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const tableOfContents = require("./tableOfContent");
 //instance of express!
 const app = express();
 
 app.use(cookieParser());
+
+app.get(`/cookie`, (request, response) => {
+    getCookiePage(response);
+}).get("/must-approve-cookie", (request, response) => {
+    getMustApprovePage(response);
+});
 app.post(
     `/cookie`,
     bodyParser.urlencoded({ extended: false }),
@@ -21,19 +28,13 @@ app.post(
         response.redirect("/must-approve-cookie");
     }
 );
-
-app.get(`/cookie`, (request, response) => {
-    getCookiePage(response);
-}).get("/must-approve-cookie", (request, response) => {
-    getMustApprovePage(response);
-});
 app.use(checkCookie)
     //make static content available that is in the "public" folder
     .use(express.static(__dirname + "/public"))
     .use(express.urlencoded({ extended: false }));
 //homepage
 app.get(`/`, (request, response) => {
-    response.send("HOMEPAGE");
+    response.send(tableOfContents.createTableOfContents());
 });
 
 //start listening on port
