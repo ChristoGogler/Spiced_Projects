@@ -6,13 +6,10 @@ const bodyParser = require("body-parser");
 const handleBars = require("express-handlebars");
 const path = require("path");
 
-const cats = [
-    { name: "Kitty", age: 23, available: true },
-    { name: "Simba", age: 45, available: false },
-    { name: "Minka", age: 12, available: true },
-    { name: "Mauzi", age: 32, available: true },
-    { name: "Garfield", age: 52, available: false },
-];
+//get json data!
+console.log(__dirname);
+const projects = require(path.join(__dirname, "public/data/projects.json"));
+const cats = require(path.join(__dirname, "public/data/cats.json"));
 
 //set up handlebars as template engine
 app.engine("handlebars", handleBars());
@@ -22,11 +19,17 @@ app.set("view engine", "handlebars");
 app.use(express.static(path.join(__dirname + "/public")));
 
 app.get("/", (request, response) => {
-    response.send("ALRIGHT!");
+    response.render("portfolio", {
+        layout: "main",
+        style: "portfolio.css",
+        title: "Portfolio",
+        projects,
+    });
 })
     .get("/hello", (request, response) => {
         response.render("hello", {
             layout: "main",
+            style: "cats.css",
             title: "cat adoption center",
             cats,
         });

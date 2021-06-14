@@ -1,0 +1,7 @@
+[
+    { "name": "Kitty", "age": 23, "available": true },
+    { "name": "Simba", "age": 45, "available": false },
+    { "name": "Minka", "age": 12, "available": true },
+    { "name": "Mauzi", "age": 32, "available": true },
+    { "name": "Garfield", "age": 52, "available": false }
+]

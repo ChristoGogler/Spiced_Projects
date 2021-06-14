@@ -15,16 +15,16 @@ main {
 }
 
 #kitty1 {
-    background-image: url("assets/kit1.jpg");
+    background-image: url("assets/kat1.jpg");
 }
 #kitty2 {
-    background-image: url("assets/kit2.jpg");
+    background-image: url("assets/kat2.jpg");
 }
 #kitty3 {
-    background-image: url("assets/kit3.jpg");
+    background-image: url("assets/kat3.jpg");
 }
 #kitty4 {
-    background-image: url("assets/kit4.jpg");
+    background-image: url("assets/kat4.jpg");
 }
 .slide {
     position: absolute;
