@@ -3,16 +3,18 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const tableOfContents = require("./tableOfContent");
+const { authenticate } = require("./basic_auth");
 //instance of express!
 const app = express();
 
+//accept/deny cookie routes
 app.use(cookieParser());
-
 app.get(`/cookie`, (request, response) => {
     getCookiePage(response);
 }).get("/must-approve-cookie", (request, response) => {
     getMustApprovePage(response);
 });
+//post cookie route
 app.post(
     `/cookie`,
     bodyParser.urlencoded({ extended: false }),
@@ -28,10 +30,14 @@ app.post(
         response.redirect("/must-approve-cookie");
     }
 );
+//authenticate user
+app.use(authenticate);
+//check if a cookie has been set
 app.use(checkCookie)
     //make static content available that is in the "public" folder
     .use(express.static(__dirname + "/public"))
     .use(express.urlencoded({ extended: false }));
+
 //homepage
 app.get(`/`, (request, response) => {
     response.send(tableOfContents.createTableOfContents());
@@ -88,7 +94,6 @@ function getCookiePage(response) {
 //do: check if user has accepted the cookie policy, if not redirect to acceptance page
 //otherwise let user move on to requested page
 function checkCookie(request, response, next) {
-    console.log(`all my cookies: ${request.cookies}`);
     //save requested url for later
     setCookie(response, "desiredUrl", request.url);
 
