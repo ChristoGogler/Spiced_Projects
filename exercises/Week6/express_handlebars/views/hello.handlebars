@@ -1,0 +1,14 @@
+<h1>Cat Adoption</h1>
+<ul>
+    {{#each cats}}
+        <li>
+            <p>This is {{name}}.</p>
+            <p>{{name}} is {{age}} weeks old.</p>
+            {{#if available}}
+                <button>Adopt me now!</button>
+            {{else}}
+                <p>{{name}} already found a home.</p>
+            {{/if}}
+        </li>
+    {{/each}}
+</ul>

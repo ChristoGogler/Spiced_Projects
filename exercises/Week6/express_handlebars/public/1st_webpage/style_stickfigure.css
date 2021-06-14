@@ -1,0 +1,84 @@
+body {
+    width: 100%;
+    position: absolute;
+}
+
+main {
+    margin: 100px;
+}
+.skin {
+    border-color: burlywood;
+}
+#hat {
+    width: 60px;
+    height: 40px;
+    border-top-left-radius: 110px;
+    border-top-right-radius: 110px;
+    border: 4px solid gray;
+    border-bottom: 0;
+    transform: translateX(-5px) translateY(20px);
+}
+#brim {
+    position: relative;
+    width: 80px;
+    height: 0;
+    border: 2px solid gray;
+    transform: translateX(-14px) translateY(20px);
+    z-index: 10;
+}
+#head {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 4px solid burlywood;
+    transform: translateX(0) translateY(10px);
+}
+#neck {
+    width: 0;
+    height: 25px;
+    border: 2px solid burlywood !important;
+    transform: translateX(0) translateY(10px);
+}
+#upperBody {
+    position: relative;
+    left: 25px;
+}
+#upperBody > div {
+    border-color: coral;
+}
+.limb {
+    width: 100px;
+    height: 0;
+    border: 2px solid;
+}
+.arm {
+    transform: translateX(-5px) translateY(0) rotate(-30deg);
+}
+.arm + .arm {
+    transform: translateX(-95px) translateY(-4px) rotate(30deg);
+}
+
+#belly {
+    width: 0;
+    height: 80px;
+    border: 2px solid;
+}
+#lowerBody {
+    position: relative;
+    left: 25px;
+}
+#lowerBody > div {
+    border-color: cornflowerblue;
+}
+
+#bottom {
+    width: 0;
+    height: 50px;
+    border: 2px solid;
+}
+.leg {
+    transform: translateX(-27px) translateY(40px) rotate(65deg);
+}
+.leg + .leg {
+    transform: translateX(-73px) translateY(36px) rotate(-65deg);
+}

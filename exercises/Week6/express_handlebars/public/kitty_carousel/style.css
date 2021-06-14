@@ -1,0 +1,134 @@
+/* Kitty Carousel */
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+}
+main {
+}
+#carousel1 {
+    height: 600px;
+    width: 100vw;
+    /* overflow needs positioning */
+    position: relative;
+    overflow: hidden;
+}
+
+#kitty1 {
+    background-image: url("assets/kit1.jpg");
+}
+#kitty2 {
+    background-image: url("assets/kit2.jpg");
+}
+#kitty3 {
+    background-image: url("assets/kit3.jpg");
+}
+#kitty4 {
+    background-image: url("assets/kit4.jpg");
+}
+.slide {
+    position: absolute;
+    width: 100vw;
+    height: 600px;
+    display: inline-block;
+    transform: translateX(100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.slide.onscreen {
+    transform: translateX(0);
+}
+.slide.exit {
+    transform: translateX(-100%);
+}
+
+.slide.onscreen,
+.slide.exit {
+    transition: ease-out;
+    transition-duration: 0.5s;
+}
+
+.dots {
+    position: absolute;
+    width: 100vw;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* border: 1px dotted green; */
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    list-style-type: none;
+}
+
+.dot {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    margin: 20px 5px;
+
+    border: 2px solid darksalmon;
+    border-radius: 50%;
+}
+.dot.current {
+    background-color: darksalmon;
+}
+/* for tablet/smartphone landscape mode */
+@media (orientation: landscape) and (max-width: 1024px) {
+    #carousel1 {
+        height: 100vh;
+    }
+    .slide {
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+    .dots {
+        height: 100vh;
+    }
+}
+
+/* for medium screens/tablet */
+@media screen and (max-width: 768px) {
+    .dot {
+    }
+    .dots {
+        height: 100vh;
+    }
+    #carousel1 {
+        height: 100vh;
+    }
+    .slide {
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+/* for small screens/smartphone */
+@media screen and (max-width: 640px) {
+    .dot {
+        width: 10px;
+        height: 10px;
+        margin: 20px 10px;
+    }
+    .dots {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        z-index: 1;
+        list-style-type: none;
+    }
+    #carousel1 {
+        height: 100vh;
+    }
+    .slide {
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+}
