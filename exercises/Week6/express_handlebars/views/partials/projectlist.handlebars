@@ -1,16 +1,16 @@
 {{#each projects}}
-    <a href="{{directory}}">
-
+    <a href="/project/{{directory}}">
+{{#if ../picture}}
         <div class="card">
-            {{#if ../picture}}
+            
                 <img src=".{{imgurl}}" alt="{{title}} screenshot" />
             {{/if}}
             <h2>{{title}}</h2>
 
             {{#if ../descript}}
                 <p>{{description}}</p>
-            {{/if}}
-        </div>
+            
+        </div>{{/if}}
 
     </a>
 {{/each}}

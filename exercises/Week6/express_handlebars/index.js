@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname + "/public")));
 app.get("/", (request, response) => {
     response.render("portfolio", {
         layout: "main",
-        style: "portfolio.css",
+        style: "./css/portfolio.css",
         title: "Portfolio",
         projects,
     });
@@ -43,7 +43,7 @@ app.get("/", (request, response) => {
                 // if no matching project is found, send 404
                 response.render("singleproject", {
                     layout: "main",
-                    style: "single.css",
+                    style: "../css/single.css",
                     title: "Project Title",
                     project,
                     projects,

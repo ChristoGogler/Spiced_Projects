@@ -1,0 +1,32 @@
+.bigpic {
+    width: 650px;
+    height: 300px;
+    border: black 1px solid;
+}
+
+.sidenav {
+    background-color: whitesmoke;
+    padding: 40px;
+    text-align: left;
+    flex-basis: 250px;
+    flex-shrink: 2;
+}
+.project {
+    background-color: whitesmoke;
+    padding: 0 40px;
+    width: 650px;
+    padding-bottom: 20px;
+}
+
+button {
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    background-color: cadetblue;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:active {
+    color: palevioletred;
+}
