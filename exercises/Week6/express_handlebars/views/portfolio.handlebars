@@ -1,11 +1,2 @@
-<main>
-    {{#each projects}}
-        <a href="{{directory}}"><div class="card">
-                <img src="{{imgurl}}" alt="{{title}} screenshot" />
-                <h2>{{title}}</h2>
-                <p>{{description}}</p>
+{{> projectlist picture=true descript=true}}
 
-            </div></a>
-    {{/each}}
-
-</main>

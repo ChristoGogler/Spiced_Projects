@@ -3,42 +3,42 @@
         "title": "Kitty Carousel",
         "description": "Image Slide Show",
         "directory": "kitty_carousel",
-        "imgurl": "./img/kitty_carousel.png"
+        "imgurl": "/img/kitty_carousel.png"
     },
     {
         "title": "Spiced Website",
         "description": "Simple Webpage with navigation - optimised for smaller screens",
         "directory": "1st_webpage",
-        "imgurl": "./img/website.png"
+        "imgurl": "/img/website.png"
     },
     {
         "title": "Connect 4",
         "description": "Browser Game",
         "directory": "connect_four",
-        "imgurl": "./img/connect4.png"
+        "imgurl": "/img/connect4.png"
     },
     {
         "title": "Autocomplete Search",
         "description": "Incremental Search offering autocomplete options",
         "directory": "incremental_search",
-        "imgurl": "./img/incremental.png"
+        "imgurl": "/img/incremental.png"
     },
     {
         "title": "Sliding Panes",
         "description": "Before/after image slider",
         "directory": "jquery_panes",
-        "imgurl": "./img/slidingpanes.png"
+        "imgurl": "/img/slidingpanes.png"
     },
     {
         "title": "Spotify Search",
         "description": "Search engine to look up music through Spotify API",
         "directory": "spotify_search",
-        "imgurl": "./img/spotify.png"
+        "imgurl": "/img/spotify.png"
     },
     {
         "title": "News Ticker",
         "description": "News rolling in and out",
         "directory": "ticker",
-        "imgurl": "./img/ticker2.png"
+        "imgurl": "/img/ticker2.png"
     }
 ]
