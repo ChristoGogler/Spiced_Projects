@@ -30,3 +30,8 @@ button {
 button:active {
     color: palevioletred;
 }
+
+.highlight {
+    color: palevioletred;
+    padding-left: 10px;
+}

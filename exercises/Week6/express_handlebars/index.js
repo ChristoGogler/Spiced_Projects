@@ -16,6 +16,18 @@ const cats = require(path.join(__dirname, "public/data/cats.json"));
 app.engine("handlebars", handleBars());
 app.set("view engine", "handlebars");
 
+var hbsHelpers = handleBars.create({
+    // Specify helpers which are only registered on this instance.
+    helpers: {
+        foo: function () {
+            return "FOO!";
+        },
+        addHighlight: function (current) {
+            return current;
+        },
+    },
+});
+
 //make static content available that is in the "public" folder
 app.use(express.static(path.join(__dirname + "/public")));
 
@@ -25,26 +37,37 @@ app.get("/", (request, response) => {
         layout: "main",
         style: "./css/portfolio.css",
         title: "Portfolio",
+        current: {},
+        helpers: {
+            addHighlight: function (current) {
+                return "";
+            },
+        },
         projects,
     });
 })
     //get the individual project description page
     .get(`/project/:project_name`, (request, response) => {
         const { project_name } = request.params;
-
         let project;
-        console.log("Project name", project_name);
         // find the project that matches projName in the projects array
         for (const element of projects) {
-            console.log(element.directory);
             if (element.directory === project_name) {
                 project = element;
-                console.log(`...rendering ${project}`);
+                // console.log(`...rendering ${project}`);
                 // if no matching project is found, send 404
                 response.render("singleproject", {
                     layout: "main",
                     style: "../css/single.css",
                     title: "Project Title",
+                    current: element,
+                    helpers: {
+                        addHighlight: function (current) {
+                            if (current.directory === project_name) {
+                                return "highlight";
+                            }
+                        },
+                    },
                     project,
                     projects,
                 });

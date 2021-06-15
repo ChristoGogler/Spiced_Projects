@@ -1,11 +1,13 @@
 {{#each projects}}
+
     <a href="/project/{{directory}}">
 {{#if ../picture}}
         <div class="card">
             
                 <img src=".{{imgurl}}" alt="{{title}} screenshot" />
             {{/if}}
-            <h2>{{title}}</h2>
+            
+            <h2 class="{{addHighlight . }}" >{{title}}</h2>
 
             {{#if ../descript}}
                 <p>{{description}}</p>
