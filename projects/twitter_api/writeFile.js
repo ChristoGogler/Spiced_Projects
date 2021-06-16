@@ -46,11 +46,15 @@ function createHeadlineArray(tweets) {
 function getUrl(tweet) {
     console.log("---> getUrl <---");
     // console.log(tweet.entities.urls);
-    if (!tweet.entities || tweet.entities.urls) {
+    if (!tweet.entities) {
         return;
     }
-    const link = JSON.stringify(tweet.entities.urls[0].url);
-
+    console.log("Tweet", tweet.entities);
+    if (!tweet.entities.urls[0]) {
+        return;
+    }
+    const link = tweet.entities.urls[0].url;
+    console.log(link);
     return link;
 }
 
