@@ -1,6 +1,8 @@
 console.log("----- TWITTER API EXERCISE -----");
 
+const path = require("path");
 const writeFile = require("./writeFile");
+const { postPara, getPara } = require("./config");
 const { makeARequest, getCredentials } = require("./makeARequest");
 const { screenname, numberOfTweets } = require("./config");
 
@@ -17,11 +19,11 @@ function getTwitterToken(callback) {
     const twitPostParameters = {
         //specify parameters
         method: "POST",
-        host: "api.twitter.com",
-        path: "/oauth2/token",
+        host: postPara.host,
+        path: postPara.path,
         headers: {
             Authorization: getCredentials(),
-            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            "Content-Type": postPara.contenttype,
         },
     };
     //call makeARequest and pass callback function that will call getTweets if successful
@@ -41,12 +43,11 @@ function getTwitterToken(callback) {
 function getTweets(tokenObject) {
     console.log("---> getTweets <---");
     const token = tokenObject[`access_token`];
-    const queryString = `?count=${numberOfTweets}&screen_name=${screenname}&tweet_mode=extended&exclude_replies=true`;
     const twitGetParameters = {
         //specify parameters
         method: "GET",
-        host: "api.twitter.com",
-        path: "/1.1/statuses/user_timeline.json" + queryString,
+        host: getPara.host,
+        path: path.join(getPara.path + getPara.queryString),
         headers: {
             Authorization: "Bearer " + token,
         },

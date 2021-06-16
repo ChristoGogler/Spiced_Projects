@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const exporting = {
     writeJSON,
-    createHeadlines,
+    createHeadlines: createHeadlineArray,
     getHeadline,
     getUrl,
 };
@@ -11,11 +11,10 @@ const exporting = {
 module.exports = exporting;
 
 //writeJSON
+//write a jso file from all the tweets
 function writeJSON(tweets) {
-    let jsonString = createHeadlines(tweets);
-    console.log("before:", jsonString);
+    let jsonString = createHeadlineArray(tweets);
     jsonString = JSON.stringify(jsonString, null, 4);
-    console.log("stringified:", jsonString);
     fs.writeFile("headlines.json", jsonString, function (error) {
         if (error) {
             console.log(error);
@@ -26,16 +25,13 @@ function writeJSON(tweets) {
 }
 
 //createHeadlines---------------------
-function createHeadlines(tweets) {
+//create array containing objects containing headlines and link
+function createHeadlineArray(tweets) {
     console.log("---> createHeadlines <---");
     const array = [];
-    // console.log("TWEET", tweets[0].entities.urls[0].url);
     for (const tweet of tweets) {
-        // console.log("TWEET: ", tweet);
         const headline = getHeadline(tweet);
-        // console.log(headline);
         const url = getUrl(tweet);
-        // console.log(url);
         const obj = {
             headline: headline,
             href: url,
@@ -46,8 +42,11 @@ function createHeadlines(tweets) {
 }
 
 //getUrl---------------------
+// extract link from tweet
 function getUrl(tweet) {
-    if (!tweet.entities) {
+    console.log("---> getUrl <---");
+    // console.log(tweet.entities.urls);
+    if (!tweet.entities || tweet.entities.urls) {
         return;
     }
     const link = JSON.stringify(tweet.entities.urls[0].url);
@@ -56,7 +55,9 @@ function getUrl(tweet) {
 }
 
 //getHeadline---------------------
+// extract headline text from tweet
 function getHeadline(tweet) {
+    console.log("---> getHeadline <---");
     let headline = tweet.full_text;
     headline = headline.split("http", 1).toString();
     headline = headline.trim();
