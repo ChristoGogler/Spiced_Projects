@@ -12,12 +12,12 @@ const postPara = {
 const getPara = {
     host: "api.twitter.com",
     path: "/1.1/statuses/user_timeline.json",
-    queryString: `?count=${numberOfTweets}&screen_name=${twitterProfileName}&tweet_mode=extended&exclude_replies=true`,
+    // queryString: `?count=${numberOfTweets}&screen_name=${twitterProfileName}&tweet_mode=extended&exclude_replies=true`,
     contenttype: "application/x-www-form-urlencoded;charset=UTF-8",
 };
 
 const exporting = {
-    numberOfTweets,
+    // numberOfTweets,
     postPara,
     getPara,
 };

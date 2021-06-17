@@ -7,12 +7,13 @@ const app = express();
 app.use(express.static(path.join(__dirname + "ticker")));
 
 app.get("/headlines.json", (request, response) => {
-    const tweetRequests = Promise.all([
-        getHeadlines("DeutscheWelle"),
-        getHeadlines("PinkNews"),
-        getHeadlines("BBCWorld"),
-    ]);
-    tweetRequests.then((tweets) => {
+    const promises = [
+        getHeadlines("DeutscheWelle", 3),
+        getHeadlines("PinkNews", 3),
+        getHeadlines("BBCWorld", 3),
+    ];
+
+    Promise.all(promises).then((tweets) => {
         response.json(tweets.flat());
     });
 });

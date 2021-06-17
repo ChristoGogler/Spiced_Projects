@@ -7,12 +7,13 @@ const { makeARequest, getCredentials } = require("./makeARequest");
 
 const exporting = {
     getTwitterToken,
+    getHeadlines,
 };
 //export
 module.exports = exporting;
 
 //ENTRY POINT
-getHeadlines(); //add newsources here later as parameter
+// getHeadlines(); //add newsources here later as parameter
 // .then(() => {
 //     console.log("getTwitterToken");
 //     getTwitterToken();
@@ -28,12 +29,12 @@ getHeadlines(); //add newsources here later as parameter
 // });
 
 //promisified!
-getHeadlines().then((data) => console.log("DATA:", data));
+//getHeadlines("BBCWorld", 3).then((data) => console.log("DATA:", data));
 
-function getHeadlines() {
+function getHeadlines(newsSource, numberOfTweets) {
     return new Promise((resolve, reject) => {
         getTwitterToken().then((token) => {
-            getTweets(token).then((tweets) => {
+            getTweets(newsSource, numberOfTweets, token).then((tweets) => {
                 createJsonString2(tweets).then((jsonString) => {
                     resolve(jsonString);
                 });
@@ -94,15 +95,16 @@ function getTwitterToken() {
 //getTweets---------------------
 //make GET request and receive an object of tweets
 //authenticate with token
-function getTweets(tokenObject) {
+function getTweets(newsSource, numberOfTweets, tokenObject) {
     return new Promise((resolve, reject) => {
         console.log("---> getTweets <---");
         const token = tokenObject[`access_token`];
+        const queryString = `?count=${numberOfTweets}&screen_name=${newsSource}&tweet_mode=extended&exclude_replies=true`;
         const twitGetParameters = {
             //specify parameters
             method: "GET",
             host: getPara.host,
-            path: path.join(getPara.path + getPara.queryString),
+            path: path.join(getPara.path + queryString),
             headers: {
                 Authorization: "Bearer " + token,
             },
