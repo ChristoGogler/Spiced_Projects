@@ -1,77 +1,65 @@
 console.log("----- TWITTER API EXERCISE -----");
 
 const path = require("path");
-const { writeJsonFile, createJsonString } = require("./writeFile");
+const { createJsonString2 } = require("./writeFile");
 const { postPara, getPara } = require("./config");
 const { makeARequest, getCredentials } = require("./makeARequest");
-const chalk = require("chalk");
-// const { screenname, numberOfTweets } = require("./config");
+
+const exporting = {
+    getTwitterToken,
+};
+//export
+module.exports = exporting;
 
 //ENTRY POINT
-// getHeadlines((successMsg, error) => {
-//     if (error) {
-//         console.log(chalk.red("OH ohhhhh!:", error));
-//         return;
-//     }
-//     console.log("Congrats, you made it!", successMsg);
+getHeadlines(); //add newsources here later as parameter
+// .then(() => {
+//     console.log("getTwitterToken");
+//     getTwitterToken();
+// })
+// .then((token) => {
+//     getTweets(token);
+// })
+// .then((tweets) => {
+//     createJsonString2(tweets);
+// })
+// .catch((error) => {
+//     console.log(error);
 // });
 
-//getHeadlines
-// get twitter tweets from twitter and save them in a file
+//promisified!
+getHeadlines().then((data) => console.log("DATA:", data));
+
 function getHeadlines() {
-    getTwitterToken((token, error) => {
-        if (error) {
-            console.log(chalk.red("Error [getTwitterToken]", error));
-        }
-        getTweets(token, (tweets, error) => {
-            if (error) {
-                console.log(chalk.red("Error [getTweets]", error));
-            }
-            createJsonString(tweets, (jsonString, error) => {
-                if (error) {
-                    console.log(chalk.red("Error [createJsonString]", error));
-                }
-                writeJsonFile(jsonString, (successMessage, error) => {
-                    if (error) {
-                        console.log(chalk.red("Error [writeJsonFile]", error));
-                    }
-                    callback(successMessage);
+    return new Promise((resolve, reject) => {
+        getTwitterToken().then((token) => {
+            getTweets(token).then((tweets) => {
+                createJsonString2(tweets).then((jsonString) => {
+                    resolve(jsonString);
                 });
             });
         });
     });
 }
 
-//promisified!
-// getHeadlines().then(() => {
-getTwitterToken()
-    .then((token) => {
-        getTweets(token)
-            .then((tweets) => {
-                createJsonString(tweets)
-                    .then((jsonString) => {
-                        writeJsonFile(jsonString)
-                            .then((successMessage) => {
-                                console.log(successMessage);
-                            })
-                            .catch((error) =>
-                                console.log(
-                                    chalk.red("Error [writeJsonFile]", error)
-                                )
-                            );
-                    })
-                    .catch((error) =>
-                        console.log(
-                            chalk.red("Error [createJsonString]", error)
-                        )
-                    );
-            })
-            .catch((error) =>
-                console.log(chalk.red("Error [getTweets]", error))
-            );
-    })
-    .catch((error) => console.log(chalk.red("Error [getTwitterToken]", error)));
-// });
+//this version is still asynchronous
+// function getHeadlines() {
+//     return new Promise((resolve, reject) => {
+//         getTwitterToken()
+//             .then((token) => {
+//                 getTweets(token);
+//             })
+//             .then((tweets) => {
+//                 createJsonString2(tweets);
+//             })
+//             .then((jsonString) => {
+//                 resolve(jsonString);
+//             })
+//             .catch((error) => {
+//                 console.log(error);
+//             });
+//     });
+// }
 
 //getTwitterToken---------------------
 //make a POST request and receive a token

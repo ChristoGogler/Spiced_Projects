@@ -1,6 +1,15 @@
 console.log("AJAX TICKER", $);
+const { getHeadlines } = require("../index");
 
 (function () {
+    // $.get("/headlines.json", (response) => {
+    //     console.log(response);
+
+    //     getHeadlines().then((jsonString) => {
+    //         console.log(jsonString);
+    //         addLinks(jsonString);
+    //     });
+    // });
     $.get("../headlines.json", function (response) {
         console.log(response);
         console.log(window.location.hostname);
