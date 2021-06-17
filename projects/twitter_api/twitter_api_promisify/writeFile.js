@@ -59,8 +59,8 @@ function createJsonString2(newsSource, tweets) {
             .map((tweet) => {
                 const link = getUrl(tweet);
                 return {
-                    text: getHeadline(newsSource, tweet),
-                    url: link,
+                    headline: getHeadline(newsSource, tweet),
+                    href: link,
                 };
             });
         // console.log("selectedTweets", selectedTweets);

@@ -5,7 +5,8 @@ const { createJsonString2 } = require("./writeFile");
 
 const app = express();
 
-app.use(express.static(path.join(__dirname + "ticker")));
+app.use(express.static(path.join(__dirname + "/ticker")));
+console.log(path.join(__dirname + "/ticker"));
 
 app.get("/headlines.json", (request, response) => {
     getTwitterToken().then((token) => {
@@ -27,4 +28,5 @@ app.get("/headlines.json", (request, response) => {
         });
     });
 });
+
 app.listen(8080, () => console.log("Im listening...."));
