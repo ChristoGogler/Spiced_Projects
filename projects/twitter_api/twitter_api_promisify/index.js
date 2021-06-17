@@ -35,7 +35,7 @@ function getHeadlines(newsSource, numberOfTweets) {
     return new Promise((resolve, reject) => {
         getTwitterToken().then((token) => {
             getTweets(newsSource, numberOfTweets, token).then((tweets) => {
-                createJsonString2(tweets).then((jsonString) => {
+                createJsonString2(newsSource, tweets).then((jsonString) => {
                     resolve(jsonString);
                 });
             });

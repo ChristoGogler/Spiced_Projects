@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const exporting = {
     writeJsonFile,
-    createJsonString,
+    // createJsonString,
     createJsonString2,
     getHeadline,
     getUrl,
@@ -28,25 +28,25 @@ function writeJsonFile(jsonString) {
 
 //createJsonString---------------------
 //create array containing objects containing headlines and link
-function createJsonString(tweets) {
-    return new Promise((resolve, reject) => {
-        console.log("---> createJsonString <---");
-        const array = [];
-        // console.log(tweets);
-        for (const tweet of tweets) {
-            const headline = getHeadline(tweet);
-            const url = getUrl(tweet);
-            const obj = {
-                headline: headline,
-                href: url,
-            };
-            array.push(obj);
-        }
-        resolve(JSON.stringify(array, null, 4));
-    });
-}
+// function createJsonString(tweets) {
+//     return new Promise((resolve, reject) => {
+//         console.log("---> createJsonString <---");
+//         const array = [];
+//         // console.log(tweets);
+//         for (const tweet of tweets) {
+//             const headline = getHeadline(tweet);
+//             const url = getUrl(tweet);
+//             const obj = {
+//                 headline: headline,
+//                 href: url,
+//             };
+//             array.push(obj);
+//         }
+//         resolve(JSON.stringify(array, null, 4));
+//     });
+// }
 
-function createJsonString2(tweets) {
+function createJsonString2(newsSource, tweets) {
     return new Promise((resolve, reject) => {
         console.log("---> createJsonString2 <---");
         console.log();
@@ -59,7 +59,7 @@ function createJsonString2(tweets) {
             .map((tweet) => {
                 const link = getUrl(tweet);
                 return {
-                    text: getHeadline(tweet),
+                    text: getHeadline(newsSource, tweet),
                     url: link,
                 };
             });
@@ -85,10 +85,11 @@ function getUrl(tweet) {
 
 //getHeadline---------------------
 // extract headline text from tweet
-function getHeadline(tweet) {
+function getHeadline(newsSource, tweet) {
     console.log("---> getHeadline <---");
     let headline = tweet.full_text;
     headline = headline.split("http", 1).toString();
+    headline += `[${newsSource}]`;
     headline = headline.trim();
 
     return headline;

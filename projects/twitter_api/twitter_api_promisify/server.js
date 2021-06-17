@@ -14,6 +14,7 @@ app.get("/headlines.json", (request, response) => {
     ];
 
     Promise.all(promises).then((tweets) => {
+        console.log("DONE!");
         response.json(tweets.flat());
     });
 });
