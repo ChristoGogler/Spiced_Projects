@@ -1,8 +1,8 @@
 const fs = require("fs");
 
 const exporting = {
-    writeJSON,
-    createHeadlines: createHeadlineArray,
+    writeJsonFile,
+    createJsonString,
     getHeadline,
     getUrl,
 };
@@ -12,24 +12,26 @@ module.exports = exporting;
 
 //writeJSON
 //write a jso file from all the tweets
-function writeJSON(tweets) {
+function writeJsonFile(jsonString, callback) {
     console.log("---> writeJSON <---");
-    let jsonString = createHeadlineArray(tweets);
-    jsonString = JSON.stringify(jsonString, null, 4);
+    // let jsonString = createHeadlineArray(tweets);
+
+    //auskommentiert zur Probe
     fs.writeFile("headlines.json", jsonString, function (error) {
         if (error) {
             console.log(error);
             return;
         }
-        console.log("successfully saved headlines.json");
+        callback("Successfully saved headlines.json");
     });
 }
 
 //createHeadlines---------------------
 //create array containing objects containing headlines and link
-function createHeadlineArray(tweets) {
+function createJsonString(tweets, callback) {
     console.log("---> createHeadlineArray <---");
     const array = [];
+    // console.log(tweets);
     for (const tweet of tweets) {
         const headline = getHeadline(tweet);
         const url = getUrl(tweet);
@@ -39,7 +41,8 @@ function createHeadlineArray(tweets) {
         };
         array.push(obj);
     }
-    return array;
+
+    callback(JSON.stringify(array, null, 4));
 }
 
 //getUrl---------------------

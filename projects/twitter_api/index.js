@@ -1,14 +1,46 @@
 console.log("----- TWITTER API EXERCISE -----");
 
 const path = require("path");
-const writeFile = require("./writeFile");
+const { writeJsonFile, createJsonString } = require("./writeFile");
 const { postPara, getPara } = require("./config");
 const { makeARequest, getCredentials } = require("./makeARequest");
-const { screenname, numberOfTweets } = require("./config");
+const chalk = require("chalk");
+// const { screenname, numberOfTweets } = require("./config");
 
 //ENTRY POINT
-//pass getTweets as callback
-getTwitterToken(getTweets);
+getHeadlines((successMsg, error) => {
+    if (error) {
+        console.log(chalk.red("OH ohhhhh!:", error));
+        return;
+    }
+    console.log("Congrats, you made it!", successMsg);
+});
+
+//getHeadlines
+// get twitter tweets from twitter and save them in a file
+function getHeadlines(callback) {
+    getTwitterToken((token, error) => {
+        if (error) {
+            console.log(chalk.red("Error [getTwitterToken]", error));
+        }
+        getTweets(token, (tweets, error) => {
+            if (error) {
+                console.log(chalk.red("Error [getTweets]", error));
+            }
+            createJsonString(tweets, (jsonString, error) => {
+                if (error) {
+                    console.log(chalk.red("Error [createJsonString]", error));
+                }
+                writeJsonFile(jsonString, (successMessage, error) => {
+                    if (error) {
+                        console.log(chalk.red("Error [writeJsonFile]", error));
+                    }
+                    callback(successMessage);
+                });
+            });
+        });
+    });
+}
 
 //getTwitterToken---------------------
 //make a POST request and receive a token
@@ -16,6 +48,7 @@ function getTwitterToken(callback) {
     console.log("---> getTwitterToken <---");
 
     const postBody = "grant_type=client_credentials";
+    // console.log("CREDENTIALS: ", getCredentials());
     const twitPostParameters = {
         //specify parameters
         method: "POST",
@@ -33,6 +66,7 @@ function getTwitterToken(callback) {
             return;
         }
         //call getTweets with the received token
+
         callback(tokenObject);
     });
 }
@@ -40,7 +74,7 @@ function getTwitterToken(callback) {
 //getTweets---------------------
 //make GET request and receive an object of tweets
 //authenticate with token
-function getTweets(tokenObject) {
+function getTweets(tokenObject, callback) {
     console.log("---> getTweets <---");
     const token = tokenObject[`access_token`];
     const twitGetParameters = {
@@ -60,6 +94,6 @@ function getTweets(tokenObject) {
         }
 
         //write a json file
-        writeFile.writeJSON(tweets);
+        callback(tweets);
     });
 }
