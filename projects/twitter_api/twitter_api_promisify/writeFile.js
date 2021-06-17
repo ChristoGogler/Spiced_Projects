@@ -89,8 +89,8 @@ function getHeadline(newsSource, tweet) {
     console.log("---> getHeadline <---");
     let headline = tweet.full_text;
     headline = headline.split("http", 1).toString();
-    headline += `[${newsSource}]`;
     headline = headline.trim();
+    headline += ` [${newsSource}]`;
 
     return headline;
 }

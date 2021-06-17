@@ -8,6 +8,7 @@ const { makeARequest, getCredentials } = require("./makeARequest");
 const exporting = {
     getTwitterToken,
     getHeadlines,
+    getTweets,
 };
 //export
 module.exports = exporting;
