@@ -29,20 +29,32 @@ module.exports = exporting;
 //     console.log(error);
 // });
 
+function getHeadlines(newsSource, numberOfTweets) {
+    return new Promise((resolve, reject) => {
+        getTwitterToken()
+        .then((token) => {
+            return getTweets(newsSource, numberOfTweets, token)})
+        .then((tweets) => {
+            return createJsonString2(newsSource, tweets);
+                });
+        });
+}
+
+
 //promisified!
 //getHeadlines("BBCWorld", 3).then((data) => console.log("DATA:", data));
 
-function getHeadlines(newsSource, numberOfTweets) {
-    return new Promise((resolve, reject) => {
-        getTwitterToken().then((token) => {
-            getTweets(newsSource, numberOfTweets, token).then((tweets) => {
-                createJsonString2(newsSource, tweets).then((jsonString) => {
-                    resolve(jsonString);
-                });
-            });
-        });
-    });
-}
+// function getHeadlines(newsSource, numberOfTweets) {
+//     return new Promise((resolve, reject) => {
+//         getTwitterToken().then((token) => {
+//             getTweets(newsSource, numberOfTweets, token).then((tweets) => {
+//                 createJsonString2(newsSource, tweets).then((jsonString) => {
+//                     resolve(jsonString);
+//                 });
+//             });
+//         });
+//     });
+// }
 
 //this version is still asynchronous
 // function getHeadlines() {
