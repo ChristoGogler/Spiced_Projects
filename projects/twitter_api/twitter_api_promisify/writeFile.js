@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { getDefaultSettings } = require("http2");
 
 const exporting = {
     writeJsonFile,
@@ -47,9 +48,9 @@ function writeJsonFile(jsonString) {
 // }
 
 function createJsonString2(newsSource, tweets) {
-    return new Promise((resolve, reject) => {
+
         console.log("---> createJsonString2 <---");
-        console.log();
+        // console.log(tweets);
         const selectedTweets = tweets
             //filter for tweets that have a url
             .filter((tweet) => {
@@ -61,11 +62,19 @@ function createJsonString2(newsSource, tweets) {
                 return {
                     headline: getHeadline(newsSource, tweet),
                     href: link,
+                    created_at: getDate(tweet),
                 };
             });
         // console.log("selectedTweets", selectedTweets);
-        resolve(selectedTweets);
-    });
+        return(selectedTweets);
+}
+
+
+//getDate---------------------
+// extract created at date from tweet
+function getDate(tweet){
+    return tweet.created_at;
+
 }
 
 //getUrl---------------------

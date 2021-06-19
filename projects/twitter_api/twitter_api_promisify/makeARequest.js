@@ -49,7 +49,7 @@ function validateRequestParameters(parameters, callback, requestBody) {
         callback(new Error("missing method parameter"));
         return;
     } else if (parameters.method == "POST") {
-        console.log("post");
+        // console.log("post");
         if (!parameters.headers["Content-Type"]) {
             callback(new Error("missing headers.Content-Type parameter"));
             return;
